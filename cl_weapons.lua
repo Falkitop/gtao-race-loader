@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
         if (UtilObjs == nil) then goto continue2 end
         -- Collect'em!
         for i=1,#UtilObjs do
-            if not(DoesEntityExist(UtilObjs[i])) then table.remove( UtilObjs, i ) end
+            --if not(DoesEntityExist(UtilObjs[i])) then table.remove( UtilObjs, i ) end ACTUALLY MAYBE NOT NEEDED?
 
             local loc = GetEntityCoords(UtilObjs[i])
 
@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
             if not (IsEntityVisible(UtilObjs[i])) then goto continue end
 
             
-            DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
+            --DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
             
             if(GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc) <= (10)) then
                 SetEntityVisible(UtilObjs[i], false, 0)
