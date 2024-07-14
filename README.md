@@ -15,6 +15,5 @@ get a random race with '/race rand'
 - Only one racetype is supported
 - Different Checkpoint types like air races aren't supported
 - Fake Checkpoints unsupported
-- 
 
 Help is much appreciated
