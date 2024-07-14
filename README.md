@@ -10,6 +10,7 @@ use it by writing /race into console
 ## TODO
 - In-Game non-admin command execution works but some things do not get loaded
 - Old Rocket Pickups do not work (Missile doesn't launch when picking up)
+- Old Pickups sometimes work, sometimes dont
 - Transformraces aren't yet supported
 - Different Checkpoint types like air races aren't supported
 
