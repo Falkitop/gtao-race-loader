@@ -46,7 +46,6 @@ function UpdateRespawnProgress(toggle, progress)
 	})
 end
 
-
 RegisterNetEvent('startracecountdown')
 AddEventHandler('startracecountdown', function(index)
 	if(index == 3) then
@@ -101,6 +100,9 @@ AddEventHandler('startracecountdown', function(index)
 		end)
 	end
 end)
+
+
+
 
 RegisterNetEvent('updateracetimer')
 AddEventHandler('updateracetimer', function(newtime)

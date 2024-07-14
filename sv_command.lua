@@ -15,7 +15,6 @@ RegisterCommand("race", function(source --[[ this is the player ID (on the serve
 	handle:close()
 	output = json.decode(output)
 	print("Loading Map: "..output[1])
-	print(output[2])
 	local parserOutput, err = ParseMissionJSON(output[2])
 	
 

@@ -15,34 +15,34 @@
     .pricedown{
         font-family: 'Pricedown Bl', sans-serif;/*Font is off*/
     }
-    h2,h3,h4{
+    .textinfo{
         font-family: "Bebas Neue", sans-serif;/*Font is off*/
         font-optical-sizing: auto;
         font-weight: 100;
         font-style: normal;
         -webkit-text-stroke: 0.3pt black;
+        color: white;
+        
     }
     .el{
         margin: 0;
         padding: 0pt;
         width: 150pt;
-        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.75672275746236) 53%, rgba(0,0,0,0.8) 100%);
+        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.75) 53%, rgba(0,0,0,0.8) 100%);
         display: flex;
         justify-content: space-between;
         margin: 2pt 0;
     }
-    h2{
-        margin: 1pt 5pt;
-        padding: 0;
-        color: white;
-        display: inline-block;
-    }
     .val{
         float: right;
+        margin: 1pt 5pt;
+        padding: 0;
     }
     .txt{
         font-size: 15pt;
-        align-self: flex-end
+        align-self: flex-end;
+        margin: 1pt 5pt;
+        padding: 0;
     }
     .countdowncircle {
     height: 130pt;
@@ -57,6 +57,12 @@
 
     }
 
+    .raceinfo{
+        background-color: rgba(0,0,0,0.8);
+        width: 500pt; 
+        height: 300pt;
+    }
+
     .countdowntext{
         font-size: 100pt;
         margin: auto;
@@ -68,43 +74,55 @@
 
 </style>
 <body>
-    <div id="raceinfo" style="height: fit-content; width: fit-content; right: 0; bottom: 0; position: absolute; margin: 20pt 30pt;">
+    <div hidden id="raceinfo" style="height: fit-content; width: fit-content; right: 0; bottom: 0; position: absolute; margin: 20pt 30pt;">
         <div  id="respawnprogressdiv" style="display: none;" class="el">
-            <h2 class="txt">Respawn</h2>
+            <h2 class="txt textinfo">Respawn</h2>
             <div style="width: 90pt; height: 10pt; margin: auto; background-color: #49171b;">
                 <div id="respawnprogress" style="background-color: #b42535; height: 100%; width: 0%;"></div>
             </div>
         </div>
         <div id="Rockets" class="el" style="display: none;">
-            <h2 class="txt">Rockets</h2>
+            <h2 class="txt textinfo">Rockets</h2>
             <img src="https://docs.fivem.net/blips/radar_rockets.png">
         </div>
         <div id="Boosters" class="el" style="display: none;">
-            <h2 class="txt">Boosters</h2>
+            <h2 class="txt textinfo">Boosters</h2>
             <img src="https://docs.fivem.net/blips/radar_boost.png">
         </div>
         <div class="el">
-            <h2 class="txt">LAP</h2>
-            <h2 class="val" id="lap">1/1</h2>
+            <h2 class="txt textinfo">LAP</h2>
+            <h2 class="val textinfo" id="lap">1/1</h2>
         </div>
         <div class="el">
-            <h2 class="txt">CHECKPOINT</h2>
-            <h2 class="val" id="checkpoint">AB</h2>
+            <h2 class="txt textinfo">CHECKPOINT</h2>
+            <h2 class="val textinfo" id="checkpoint">AB</h2>
         </div>
         <div class="el">
-            <h2 class="txt">POSITION</h2>
-            <h2 class="val" id="position">AB</h2>
+            <h2 class="txt textinfo">POSITION</h2>
+            <h2 class="val textinfo" id="position">AB</h2>
         </div>
         <div class="el">
-            <h2 class="txt">TIME</h2>
-            <h2 class="val" id="time">AB</h2>
+            <h2 class="txt textinfo">TIME</h2>
+            <h2 class="val textinfo" id="time">AB</h2>
         </div>
+    </div>
+
+
+    <!--INITALLY WANTED TO ADD INFO BUT I JUST DISREGARD IT-->
+    <div hidden id="raceinfo" class="raceinfo" >
+        <img id="raceinfo.img" style="margin: 10pt;" src="https://prod.cloud.rockstargames.com/ugc/gta5mission/6861/raJFAGN0J0CWla3Tz8YnGg/1_0.jpg">
+        <h1 id="raceinfo.name" class="textinfo" style="margin: 0 10pt;">Name</h1>
+        <h3 id="raceinfo.author" class="textinfo" style="margin: 0 10pt;">Author</h3>
+        <h3 id="raceinfo.racetype" class="textinfo" style="margin: 0 10pt;">Type</h3>
+        <h3 id="raceinfo.played" class="textinfo" style="margin: 0 10pt;">Played</h3>
+        <h3 id="raceinfo.vehicletype" class="textinfo" style="margin: 0 10pt;">VehicleType</h3>
     </div>
 
     <div hidden id="divcountdown" class="countdowncircle">
         <h1 id="txtcountdown" class="countdowntext pricedown">2</h1>
     </div>
 
+    
 </body>
 
 <script>
@@ -144,7 +162,14 @@ window.addEventListener('message', (event) => {
             document.getElementById('Boosters').style.display = "flex"
         }
     }
-
+    else if(event.data.action === 'raceinfo')
+        //document.getElementById('raceinfo').hidden = event.data.hidden
+        document.getElementById('raceinfo.img').src = event.data.img
+        document.getElementById('raceinfo.name').innerHTML = "Name: "+event.data.name
+        document.getElementById('raceinfo.author').innerHTML = "Author: "+event.data.author
+        document.getElementById('raceinfo.racetype').innerHTML = "Type: "+event.data.racetype
+        document.getElementById('raceinfo.played').innerHTML = "Played: "+event.data.played
+        document.getElementById('raceinfo.vehicletype').innerHTML = "Vehicles: "+event.data.vehicletype
 });
 </script>
 </html>

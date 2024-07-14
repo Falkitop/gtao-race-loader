@@ -49,71 +49,70 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-        if (UtilObjs == nil) then goto continue2 end
+
+        if (UtilObjs == nil) then goto SkipAll end
+        if(CurrentWeapon ~= nil) then goto SkipPickup end
         -- Collect'em!
         for i=1,#UtilObjs do
             --if not(DoesEntityExist(UtilObjs[i])) then table.remove( UtilObjs, i ) end ACTUALLY MAYBE NOT NEEDED?
 
             local loc = GetEntityCoords(UtilObjs[i])
-
-            if(CurrentWeapon ~= nil) then break end
-
             if not (IsEntityVisible(UtilObjs[i])) then goto continue end
-
             
-            --DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
+            DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
             
             if(GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc) <= (10)) then
                 SetEntityVisible(UtilObjs[i], false, 0)
                 if(GetEntityModel(UtilObjs[i]) == -1531914544) then --Rocket
-                    --UpdateWeapon(0)
+                    UpdateWeapon(0)
                 else
                     UpdateWeapon(1)
                 end
             end
             ::continue::
         end
-        
+
+        ::SkipPickup::
+
+        if(CurrentWeapon == nil) then goto SkipAll end
 
         --Use'em
         if(IsControlPressed(0, 86)) then
-            -- ShootSingleBulletBetweenCoords(
-            --     GetEntityCoords(GetPlayerPed(-1)), 
-            --     vector3(0, 0, 0), 
-            --     10, 
-            --     false, 
-            --     GetHashKey("WEAPON_RPG"), 
-            --     GetPlayerPed(-1), 
-            --     true,
-            --     false,
-            --     -1
-            -- )
 
-            --WHY THE FUK DOENST IT WORK?????
+            local playerPed = GetPlayerPed(-1)
 
-            if(CurrentWeapon == nil) then goto continue2 end
+            
 
 
             if(CurrentWeapon == 0) then
                 print("Used Rocket")
+                if(GetVehiclePedIsIn(playerPed) ~= nil) then
+                    local vehicle = GetVehiclePedIsIn(playerPed)
+                    local rpgHash = GetHashKey("WEAPON_AIRSTRIKE_ROCKET")
+                    local vehiclecoords = GetEntityCoords(vehicle)
+                    local targetCoords = vehiclecoords+ GetEntityForwardVector(vehicle)
+                    RequestWeaponAsset(rpgHash, 31, 0)
+                    while not HasWeaponAssetLoaded(rpgHash) do
+                        Citizen.Wait(0) --Could result in delay
+                    end
+                    ShootSingleBulletBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), targetCoords, 1, true, rpgHash, GetPlayerPed(-1), true, false, -1.0)
+                end
                 UpdateWeapon(nil)
-
+                Citizen.Wait(1000)--Break so spamming isnt possible
                 
             elseif(CurrentWeapon==1) then
                 print("Used Booster")
                 UpdateWeapon(nil)
                 SetVehicleBoostActive(GetVehiclePedIsIn(GetPlayerPed(-1)), true)
                 SetVehicleForwardSpeed(GetVehiclePedIsIn(GetPlayerPed(-1)), 
-                    #(GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1)))*	GetEntityForwardVector(GetVehiclePedIsIn(GetPlayerPed(-1))))+5.0)--BaseSpeed
+                    #(GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1)))*GetEntityForwardVector(GetVehiclePedIsIn(GetPlayerPed(-1))))+5.0)--BaseSpeed
                 StartScreenEffect("RaceTurbo", 0, 0)
+                Citizen.Wait(1000)
             end
         end
 
+        ::SkipAll::
 
-        ::continue2::
-
-        
         Citizen.Wait(0)
     end
-
 end)

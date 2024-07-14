@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
 				if(#loadedUGC['mission']['race']["chl"] == CurrentCheckpointIndex+1) then
 					PlaySoundFrontend(-1, "Finish_Win", "DLC_AW_Frontend_Sounds")
 				else
-					PlaySoundFrontend(-1, "Checkpoint", "DLC_AW_Frontend_Sounds")
+					PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET")
 				end
 
                 
