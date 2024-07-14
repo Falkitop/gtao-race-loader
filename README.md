@@ -13,7 +13,8 @@ use it by '/race [id]'
 - ~Old Rocket Pickups do not work (Missile doesn't launch when picking up)~
 - Only one (pre Cunning Stunts) race type is supported
 - Different Checkpoint types like air races
-- Fake Checkpoints 
+- Fake Checkpoints
+- Proper Respawn after explosison
 - Vehicle Selection Menu using NativeUI
 
 Help is much appreciated
