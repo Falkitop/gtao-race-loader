@@ -5,6 +5,9 @@ This resource can be seen as a more feature-rich version of https://github.com/j
 
 the lua_getrace.py is getting a jsonstring from anywhere you want to and it loads it automatically.
 
+# REQUIREMENTS
+A Database is required that has all the races included in two columns named `id` which is the id of the race and `data` which is the JSON string
+
 use it by '/race [id]'
 
 
