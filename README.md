@@ -6,7 +6,8 @@ This resource can be seen as a more feature-rich version of https://github.com/j
 the lua_getrace.py is getting a jsonstring from anywhere you want to and it loads it automatically.
 
 # REQUIREMENTS
-A Database is required that has all the races included in two columns named `id` which is the id of the race and `data` which is the JSON string
+A Database is required that has all the races included in two columns named `id` which is the id of the race and `data` which is the JSON string.
+I have uploaded one with around 14000 Races on [GTA5Mods](https://www.gta5-mods.com/tools/database-of-14000-gta-online-races-topicyeah#comments_tab)
 
 use it by '/race [id]'
 
