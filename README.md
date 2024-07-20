@@ -19,7 +19,8 @@ use it by '/race [id]'
 - Only one (pre Cunning Stunts) race type is supported
 - Different Checkpoint types like air races
 - Fake Checkpoints
-- Proper Respawn after explosison
+- ~Proper Respawn after explosison~
 - Vehicle Selection Menu using NativeUI
+- Camera Focus on next checkpoint
 
 Help is much appreciated
