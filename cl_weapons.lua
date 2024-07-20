@@ -51,15 +51,18 @@ Citizen.CreateThread(function()
 	while true do
 
         if (UtilObjs == nil) then goto SkipAll end
-        if(CurrentWeapon ~= nil) then goto SkipPickup end
+        
         -- Collect'em!
         for i=1,#UtilObjs do
             --if not(DoesEntityExist(UtilObjs[i])) then table.remove( UtilObjs, i ) end ACTUALLY MAYBE NOT NEEDED?
+            
+            --Needs to be in loop so that all weapons are instantly kicked
+            if(CurrentWeapon ~= nil) then goto SkipPickup end
 
             local loc = GetEntityCoords(UtilObjs[i])
             if not (IsEntityVisible(UtilObjs[i])) then goto continue end
             
-            DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
+            --DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
             
             if(GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc) <= (10)) then
                 SetEntityVisible(UtilObjs[i], false, 0)
@@ -90,12 +93,24 @@ Citizen.CreateThread(function()
                     local vehicle = GetVehiclePedIsIn(playerPed)
                     local rpgHash = GetHashKey("WEAPON_AIRSTRIKE_ROCKET")
                     local vehiclecoords = GetEntityCoords(vehicle)
-                    local targetCoords = vehiclecoords+ GetEntityForwardVector(vehicle)
+                    local rTargetCoords = GetEntityForwardVector(vehicle)
+                    local lTargetCoords = GetEntityForwardVector(vehicle)
+                    if(IsControlPressed(0, 79)) then 
+                        rTargetCoords = rTargetCoords * -1
+                        lTargetCoords = lTargetCoords * -1
+                    end
+                    rTargetCoords = rTargetCoords+GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), vector3(1, 0, 0))
+                    lTargetCoords = lTargetCoords+GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), vector3(-1, 0, 0))
+
+                    local rStartCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), vector3(1, 0, 0))
+                    local lStartCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), vector3(-1, 0, 0))
+
                     RequestWeaponAsset(rpgHash, 31, 0)
                     while not HasWeaponAssetLoaded(rpgHash) do
                         Citizen.Wait(0) --Could result in delay
                     end
-                    ShootSingleBulletBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), targetCoords, 1, true, rpgHash, GetPlayerPed(-1), true, false, -1.0)
+                    ShootSingleBulletBetweenCoordsIgnoreEntity(rStartCoords, rTargetCoords, 1, true, rpgHash, GetPlayerPed(-1), true, false, -1.0, CurrentVehicle)
+                    ShootSingleBulletBetweenCoordsIgnoreEntity(lStartCoords, lTargetCoords, 1, true, rpgHash, GetPlayerPed(-1), true, false, -1.0, CurrentVehicle)
                 end
                 UpdateWeapon(nil)
                 Citizen.Wait(1000)--Break so spamming isnt possible

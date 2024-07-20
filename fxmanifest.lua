@@ -14,6 +14,8 @@ client_scripts {
 	"cl_checkpoint.lua",
 	"cl_weapons.lua",
 	"cl_gui.lua",
+	"cl_respawn.lua",
+	"cl_focuscam.lua",
 	"@NativeUI/NativeUI.lua",
 }
 
@@ -22,8 +24,9 @@ server_scripts {
 	"MissionJSON.lua",
 	"server.lua",
 	"sv_command.lua",
+	"sv_respawn.lua",
 } 
 
-author 'Jaymo'
-version '0.3.0'
-description 'A FiveM resource for fetching, caching, deserialising and loading MissionJSON such as races and other GTA:O UGC'
+author 'Falkitop'
+version '0.0.1'
+description 'FiveM resource that allows to drive community made races from GTA Online'

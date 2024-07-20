@@ -3,8 +3,6 @@ NextCheckpoint = nil
 NextCheckpointBlip = nil
 CurrentCheckpointHead = nil
 CurrentCheckpointLoc = nil
-local Vehicle = nil
-
 
 function IsInRace()
 	return loadedUGC['mission'] ~= nil
@@ -119,55 +117,3 @@ Citizen.CreateThread(function()
 
 end)
 
---Respawn
-local RespawnDelta = 0
-Citizen.CreateThread(function()
-	while true
-		do
-
-			--print(GetVehiclePedIsIn(GetPlayerPed(-1), true))
-
-			--print(IsVehicleDriveable(GetVehiclePedIsIn(GetPlayerPed(-1), true), true))
-			DisableControlAction(0, 75, true)
-			if IsDisabledControlPressed(0, 75) then
-				RespawnDelta = RespawnDelta + 1/60
-				UpdateRespawnProgress(true, RespawnDelta)
-			end
-
-			if IsDisabledControlJustReleased(0, 75) then
-				if (RespawnDelta < 1) then
-					TaskLeaveVehicle(PlayerPed, GetVehiclePedIsIn(PlayerPed))
-				end
-				RespawnDelta = 0
-				UpdateRespawnProgress(false, RespawnDelta)
-			end
-
-			--Respawn
-			if (RespawnDelta > 1) then
-                --FIX THAT IT DOESNT SPAM RESET WHEN HOLDING DOWN
-
-				Vehicle = GetVehiclePedIsIn(PlayerPed, true)
-
-
-                SetEntityCoords(Vehicle, CurrentCheckpointLoc)
-                SetEntityHeading((Vehicle), CurrentCheckpointHead)
-                SetGameplayCamRelativeHeading(0)
-
-				SetVehicleFixed(Vehicle)
-				print("Playervehicle: "..Vehicle)
-				if not(IsPedInAnyVehicle(GetPlayerPed(-1), true)) then
-                	
-				end
-				TaskWarpPedIntoVehicle(PlayerPedId(), Vehicle, -1)
-				StopEntityFire(Vehicle)
-				SetVehicleEngineOn(Vehicle, true, true, false)
-                
-
-				--local dir = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex] - loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex-1]
-				--SetGameplayCamRelativeRotation(dir)--Will have error at finish line
-				
-			end
-		Citizen.Wait(1)
-	end
-
-end)

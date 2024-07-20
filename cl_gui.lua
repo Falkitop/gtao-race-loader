@@ -27,7 +27,7 @@ function UpdateWeaponUI(t, i)
 end
 
 
-function UpdateRespawnProgress(toggle, progress)
+function UpdateRespawnProgressUI(toggle, progress)
 	if (toggle) then
 		SendNUIMessage({
 			action = 'updaterespawnprogress',
@@ -108,7 +108,7 @@ RegisterNetEvent('updateracetimer')
 AddEventHandler('updateracetimer', function(newtime)
 	SendNUIMessage({
 		action = 'updateracetimer',
-		time = math.floor( newtime/1000 )
+		time = newtime
 	})
 end)
 
