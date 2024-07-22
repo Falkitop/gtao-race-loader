@@ -11,16 +11,18 @@ I have uploaded one with around 100.000 Races on [GTA5Mods](https://www.gta5-mod
 Just Place the database named race.db into the resource folder.
 
 use it by '/race [id]'
+or a random race with '/race rand'
+to stop the current race do '/race stop'
 
 
 ## TODO
 - ~In-game non-admin command execution works but some things do not get loaded~
-- ~Old Rocket Pickups do not work (Missile doesn't launch when picking up)~
+- ~Old Rocket Pickups do not work~
 - Only one (pre Cunning Stunts) race type is supported
 - Different Checkpoint types like air races
 - Fake Checkpoints
 - ~Proper Respawn after explosison~
 - Vehicle Selection Menu using NativeUI
 - Camera Focus on next checkpoint
+- Vehicle Special Ability Chargeup
 
-Help is much appreciated

@@ -83,8 +83,11 @@ function LoadNextCheckpoint()
 	if(CurrentCheckpointIndex+1 == len) then
 		loc = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1]
 		CreateGroundFinishCheckpoint(loc)
+		print("Finished Race")
 	end
 end
+
+
 
 --Entered Checkpoint
 Citizen.CreateThread(function()
@@ -98,6 +101,7 @@ Citizen.CreateThread(function()
                 --Use diffferent sound for finish goal
 				if(#loadedUGC['mission']['race']["chl"] == CurrentCheckpointIndex+1) then
 					PlaySoundFrontend(-1, "Finish_Win", "DLC_AW_Frontend_Sounds")
+					TriggerServerEvent("playerenteredfinish", GetPlayerServerId())
 				else
 					PlaySoundFrontend(-1, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET")
 				end

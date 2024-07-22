@@ -57,11 +57,15 @@ AddEventHandler('playerloadedrace', function(playerid)
 	end
 end)
 
-local txt = "~h~".."NORD".."~h~ has reached the finish line "
-TriggerClientEvent("shownotification", -1, txt)
+
+
+
+
+
+
 RegisterNetEvent('playerenteredfinish')
-AddEventHandler('playerenteredfinish', function(playerid)
-	local txt = "~h~"..print(GetPlayerName(playerid)).."~h~ has reached the finish line "
+AddEventHandler('playerenteredfinish', function(playerped)
+	local txt = "~h~"..GetPlayerName(playerped+1).."~h~ has reached the finish line "
 	TriggerClientEvent("shownotification", -1, txt)
 end)
 
