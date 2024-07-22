@@ -160,6 +160,18 @@ local function LoadUGC()
 	TriggerServerEvent("playerloadedrace", GetPlayerServerId())
 end
 
+
+
+RegisterNetEvent('shownotification')
+AddEventHandler('shownotification', function(txt)
+	SetNotificationTextEntry('STRING')
+	AddTextComponentString(txt)
+	DrawNotification(false, false)
+end)
+
+
+
+
 local function UnloadUGC()
 	if loadedUGC.objects then
 		for _, objectHandle in ipairs(loadedUGC.objects) do

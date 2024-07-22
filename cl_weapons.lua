@@ -113,7 +113,7 @@ Citizen.CreateThread(function()
                     ShootSingleBulletBetweenCoordsIgnoreEntity(lStartCoords, lTargetCoords, 1, true, rpgHash, GetPlayerPed(-1), true, false, -1.0, CurrentVehicle)
                 end
                 UpdateWeapon(nil)
-                Citizen.Wait(1000)--Break so spamming isnt possible
+                
                 
             elseif(CurrentWeapon==1) then
                 print("Used Booster")
@@ -122,7 +122,7 @@ Citizen.CreateThread(function()
                 SetVehicleForwardSpeed(GetVehiclePedIsIn(GetPlayerPed(-1)), 
                     #(GetEntitySpeed(GetVehiclePedIsIn(GetPlayerPed(-1)))*GetEntityForwardVector(GetVehiclePedIsIn(GetPlayerPed(-1))))+5.0)--BaseSpeed
                 StartScreenEffect("RaceTurbo", 0, 0)
-                Citizen.Wait(1000)
+                
             end
         end
 

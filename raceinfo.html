@@ -7,42 +7,55 @@
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:ital,wght@0,300..900;1,300..900&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/pricedown" rel="stylesheet">
                 
 </head>
 <style>
+    @font-face {
+        font-family: "ChaletComprime";
+        src: url(https://github.com/codibez/streetlabel/blob/master/html/fonts/ChaletComprime-CologneSixty.woff) format("truetype");
+    }
+
     .pricedown{
         font-family: 'Pricedown Bl', sans-serif;/*Font is off*/
     }
     .textinfo{
-        font-family: "Bebas Neue", sans-serif;/*Font is off*/
+        font-family: "ChaletComprime", sans-serif;/*Font is off*/
         font-optical-sizing: auto;
         font-weight: 100;
         font-style: normal;
-        -webkit-text-stroke: 0.3pt black;
+        /* --webkit-text-stroke: 0.3pt rgb(255, 255, 255); */
         color: white;
-        
+
     }
-    .el{
-        margin: 0;
+    .infoelement{
         padding: 0pt;
-        width: 150pt;
-        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.75) 53%, rgba(0,0,0,0.8) 100%);
+        padding-left: 10pt;
+        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.75) 53%, rgba(0,0,0,0.8) 90%);
         display: flex;
         justify-content: space-between;
-        margin: 2pt 0;
+        margin: 2.5pt 0;
+        padding-top: 1pt;
+        padding-bottom: 1pt;
+        height: 20pt;
     }
-    .val{
+    .infoval{
+        text-align: right;
         float: right;
-        margin: 1pt 5pt;
+        margin: 0;
+        margin-right:5pt;
         padding: 0;
+        width: 100pt;
+        font-size: 16pt;
     }
-    .txt{
-        font-size: 15pt;
-        align-self: flex-end;
+    .infotxt{
+        font-size: 10pt;
         margin: 1pt 5pt;
         padding: 0;
+        margin-right: 0;
+        margin-left: auto;
+        margin-top: auto;
+        margin-bottom: 3pt;
     }
     .countdowncircle {
     height: 130pt;
@@ -59,7 +72,6 @@
 
     .raceinfo{
         background-color: rgba(0,0,0,0.8);
-        width: 500pt; 
         height: 300pt;
     }
 
@@ -74,36 +86,37 @@
 
 </style>
 <body>
-    <div  hidden  id="raceinfo" style="height: fit-content; width: fit-content; right: 0; bottom: 0; position: absolute; margin: 20pt 30pt;">
-        <div id="respawnprogressdiv" style="display: none;" class="el">
-            <h2 class="txt textinfo">Respawn</h2>
-            <div style="width: 90pt; height: 9pt;  margin: auto; background-color: #49171b;">
+    <div    id="raceinfo" style="height: fit-content; width: fit-content; right: 0; bottom: 0; position: absolute; margin: 20pt 30pt;">
+        <div id="respawnprogressdiv" style="display: none;" class="infoelement">
+            <h2 class="infotxt textinfo">RESPAWN</h2>
+            <div style="width: 80pt; height: 9pt;  margin: auto 5pt auto 12pt; background-color: #49171b;">
                 <div id="respawnprogress" style="background-color: #b42535; height: 100%; width: 0%;"></div>
             </div>
         </div>
-        <div id="Rockets" class="el" style="display: none;">
-            <h2 class="txt textinfo">Rockets</h2>
-            <img src="https://docs.fivem.net/blips/radar_rockets.png">
+        <div id="Rockets" class="infoelement" style="display: none;">
+            <h2 class="infotxt textinfo">ROCKETS</h2>
+            <div style="width: 100pt; text-align: right;"><img src="https://docs.fivem.net/blips/radar_rockets.png"></div>
         </div>
-        <div id="Boosters" class="el" style="display: none;">
-            <h2 class="txt textinfo">Boosters</h2>
-            <img src="https://docs.fivem.net/blips/radar_boost.png">
+        <div id="Boosters" class="infoelement" style="display: none;">
+            <h2 class="infotxt textinfo">BOOSTER</h2>
+            <div style="width: 100pt; text-align: right;"><img src="https://docs.fivem.net/blips/radar_boost.png"></div>
+            
         </div>
-        <div class="el">
-            <h2 class="txt textinfo">LAP</h2>
-            <h2 class="val textinfo" id="lap">1/1</h2>
+        <div class="infoelement">
+            <h2 class="infotxt textinfo">LAP</h2>
+            <h2 class="infoval textinfo" id="lap">1/6</h2>
         </div>
-        <div class="el">
-            <h2 class="txt textinfo">CHECKPOINT</h2>
-            <h2 class="val textinfo" id="checkpoint">AB</h2>
+        <div class="infoelement">
+            <h2 class="infotxt textinfo">CHECKPOINT</h2>
+            <h2 class="infoval textinfo" id="checkpoint">AB</h2>
         </div>
-        <div class="el">
-            <h2 class="txt textinfo">POSITION</h2>
-            <h2 class="val textinfo" id="position">AB</h2>
+        <div class="infoelement">
+            <h2 class="infotxt textinfo">POSITION</h2>
+            <h2 class="infoval textinfo" id="position">AB</h2>
         </div>
-        <div class="el">
-            <h2 class="txt textinfo">TIME</h2>
-            <h2 class="val textinfo" id="time">AB</h2>
+        <div class="infoelement">
+            <h2 class="infotxt textinfo">TIME</h2>
+            <h2 class="infoval textinfo" id="time">03:49.47</h2>
         </div>
     </div>
 
