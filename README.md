@@ -19,7 +19,7 @@ to stop the current race do '/race stop'
 - Normal AirRace
 
 # List of all possible Racetypes with corresponding gameids
-'
+```
 	[0] = "Landrace",
 	[1] = "LandraceP2P",
 	[2] = "WaterRace",
@@ -32,7 +32,7 @@ to stop the current race do '/race stop'
 	[13] = "BikeRaceP2P",
 	[24] = "OpenWheelRace",
 	[26] = "PursuitRace"
-'
+```
 
 ## TODO
 - ~In-game non-admin command execution works but some things do not get loaded~
