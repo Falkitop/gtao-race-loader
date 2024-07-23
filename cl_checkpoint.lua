@@ -1,15 +1,17 @@
-CurrentCheckpointIndex = 0
-NextCheckpoint = nil
-NextCheckpointBlip = nil
+CurrentCheckpointIndex = 0 --Starts at 0
+local NextCheckpoint = nil
+local NextCheckpointBlip = nil
+local NextTransformCheckpointMarker = nil
+local NextCheckpointRadius = nil
 CurrentCheckpointHead = nil
 CurrentCheckpointLoc = nil
-CurrentTransformCheckpointMarker = nil
 
 
 
-local cR, cG, cB, cA = 247, 198, 104, 100
+
+local CPr, CPg, CPb, CPa = 247, 198, 104, 100
 local cIR, cIG, cIB, cIA = 108, 183, 220, 220
-
+local CPTr, CPTg, CPTb, CPTa  = 226, 56, 72, 140
 
 local racetype = {
 	[0] = "Landrace",
@@ -32,15 +34,17 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 	if not(type == 4 or type == 5) then --Anything other than AirRace
 		chtype = 0
 		chtypefin = 4
+		NextCheckpointRadius = 10.0
 	else
 		chtype = 13
 		chtypefin = 16
+		NextCheckpointRadius = 50.0
 	end
 	
 	if(finish) then
-		NextCheckpoint = CreateCheckpoint(chtypefin, loc, nextloc, 10.0, cR, cG, cB, cA, 100, 100)
+		NextCheckpoint = CreateCheckpoint(chtypefin, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
 	else
-		NextCheckpoint = CreateCheckpoint(chtype, loc, nextloc, 10.0, cR, cG, cB, cA, 100, 100)
+		NextCheckpoint = CreateCheckpoint(chtype, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
 	end	
 
 	SetCheckpointRgba2(NextCheckpoint, cIR, cIG, cIB, cIA)
@@ -49,14 +53,11 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 end
 
 local function CreateTransformCheckpoint(loc, nextloc)
-	NextCheckpoint = CreateCheckpoint(42, loc, nextloc, 50.0, 240, 10, 10, cA, 100, 100)
+	NextCheckpointRadius = 50.0
+	NextCheckpoint = CreateCheckpoint(42, loc, nextloc, NextCheckpointRadius, CPTr, CPTg, CPTb, CPTa, 100, 100)
 	NextCheckpointBlip = AddBlipForCoord(loc)
-end
-
-local function IsTransformCheckpoint(index)
-	return loadedUGC['mission']['race']["cptfrm"][index] > 0
-	-- unsure what 0 does so I exclude it as well
-	--EDIT 0 is the vehicle that you have at the beginning
+	SetBlipSprite(NextCheckpointBlip, 570)
+	SetBlipColour(NextCheckpointBlip, 1)
 end
 
 local function CreateRepairCheckpoint()
@@ -71,7 +72,32 @@ local function CreatePlaneAngleCheckpoint()
 	--37
 end
 
-local function CreateTeleportCheckpoint()
+local function CreateTeleportCheckpoint(loc, nextloc)
+	NextCheckpointRadius = 50.0
+	NextCheckpoint = CreateCheckpoint(42, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
+	NextCheckpointBlip = AddBlipForCoord(loc)
+	CreateMarker(42, loc, vector3(0, 0, 0), vector3(25, 25, 25), cIR, cIG, cIB, cIA)
+
+end
+
+local function IsTransformCheckpoint(index)
+	if(loadedUGC['mission']['race']["cptfrm"] == nil) then return false end
+	return loadedUGC['mission']['race']["cptfrm"][index] > 0
+	--0 is the vehicle that you have at the beginning
+end
+
+local function IsTeleportCheckpoint(index)
+
+	if(loadedUGC['mission']['race']["cpbs1"] == nil) then return false end
+	return loadedUGC['mission']['race']["cpbs1"][index] == 134217731 --Why is 1 a null value for a json string???
+	--[[
+
+	THIS IS ALL JUST A MAYBE
+	134217731 => TeleportPoint
+	515 => TransformPoint
+	1 => NormalPoint
+	3 => 
+	]]
 end
 
 function LoadNextCheckpoint()
@@ -84,7 +110,15 @@ function LoadNextCheckpoint()
 	--Remove Last Checkpoint
 	RemoveBlip(NextCheckpointBlip)
 	DeleteCheckpoint(NextCheckpoint)
+	NextTransformCheckpointMarker = nil
 
+	--Teleport Checkpoint
+	if(IsTeleportCheckpoint(CurrentCheckpointIndex+1)) then
+		loc = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1]
+		nextloc = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+2]
+		CreateTeleportCheckpoint(loc, nextloc)
+		return
+	end
 
 	--Transform Checkpoint
 	if(IsTransformCheckpoint(CurrentCheckpointIndex+1)) then
@@ -111,33 +145,26 @@ function LoadNextCheckpoint()
 end
 
 --NOT YET IMPLEMENTED
-function CreateMarker(Type, x, y, z, rx, ry, rz, w, l, h, r, g, b, a)
-	CurrentTransformCheckpointMarker = {Type, pos, dir, rot, scale, r, g, b, a}
+function CreateMarker(Type, pos, dir, scale, r, g, b, a)
+	NextTransformCheckpointMarker = {Type, pos, dir, dir, scale, r, g, b, a}
 end
 --Markerloop (stupid)
 Citizen.CreateThread(function()
 	while true do
-		if(CurrentTransformCheckpointMarker == nil) then goto c end
+		if(NextTransformCheckpointMarker == nil) then goto c end
 		DrawMarker(
-			CurrentTransformCheckpointMarker[1],
-			CurrentTransformCheckpointMarker[2],
-			CurrentTransformCheckpointMarker[3],
-			CurrentTransformCheckpointMarker[4],
-			CurrentTransformCheckpointMarker[5],
-			CurrentTransformCheckpointMarker[6],
-			CurrentTransformCheckpointMarker[7],
-			CurrentTransformCheckpointMarker[8],
-			CurrentTransformCheckpointMarker[9]
-			-- false,
-			-- false,
-			-- 2,
-			-- nil,
-			-- nil,
-			-- false
+			NextTransformCheckpointMarker[1],
+			NextTransformCheckpointMarker[2],
+			NextTransformCheckpointMarker[3],
+			NextTransformCheckpointMarker[4],
+			NextTransformCheckpointMarker[5],
+			NextTransformCheckpointMarker[6],
+			NextTransformCheckpointMarker[7],
+			NextTransformCheckpointMarker[8],
+			NextTransformCheckpointMarker[9]
 		)		
 		::c::
 		Wait(0)
-		--print(GetVehicleType())
 	end
 end)
 
@@ -149,8 +176,16 @@ Citizen.CreateThread(function()
 			--If no race is loaded
 			if(not IsInRace()) then goto continue end
 		  	
-			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId()), true) <= (15) then -- Entered checkpoint
+			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId()), true) <= (NextCheckpointRadius) then -- Entered checkpoint
 				
+
+				--Teleport
+				if(IsTeleportCheckpoint(CurrentCheckpointIndex+1)) then
+					SetPedCoordsKeepVehicle(GetPlayerPed(-1), loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+2])
+				end
+
+
+
 				--Transform
 				if(IsTransformCheckpoint(CurrentCheckpointIndex+1)) then
 					local TransformCheckpointHashIndex = loadedUGC['mission']['race']["cptfrm"][CurrentCheckpointIndex+1]
@@ -161,12 +196,13 @@ Citizen.CreateThread(function()
 						Wait(1)
 					end
 					local newVeh = CreateVehicle(TransformVehicleHash, loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1],loadedUGC['mission']['race']["chh"][CurrentCheckpointIndex+1], true, false)
-					local curVel = #GetEntityVelocity(newVeh)
+					local curVel = 30
 					DeleteEntity(GetVehiclePedIsIn(GetPlayerPed(-1)))
 					TaskWarpPedIntoVehicle(GetPlayerPed(-1), newVeh, -1)
 					SetEntityVelocity(newVeh, GetEntityForwardVector(newVeh)*curVel)
 					SetVehicleEngineOn(newVeh, true, true, false)
 					SetModelAsNoLongerNeeded(TransformVehicleHash)
+					print("Transformed into" .. TransformVehicleHash)
 				end
 
 

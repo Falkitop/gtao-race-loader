@@ -36,7 +36,6 @@ to stop the current race do '/race stop'
 
 ## TODO
 - Fake Checkpoints
-- Warp Checkpoints
 - Plane Angle Checkpoints
 - Transform Checkpoints
 - Vehicle Selection Menu using NativeUI
