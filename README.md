@@ -7,7 +7,7 @@ the lua_getrace.py is getting a jsonstring from anywhere you want to and it load
 
 # REQUIREMENTS
 A Database is required that has all the races included in two columns named `id` which is the id of the race and `data` which is the JSON string.
-I have uploaded one with around 100.000 Races on [GTA5Mods](https://www.gta5-mods.com/tools/database-of-14000-gta-online-races-topicyeah#comments_tab)
+I have uploaded one with around 100.000 Races to [GTA5Mods](https://www.gta5-mods.com/tools/database-of-14000-gta-online-races-topicyeah#comments_tab).
 Just Place the database named race.db into the resource folder.
 
 use it by '/race [id]'
@@ -18,7 +18,7 @@ to stop the current race do '/race stop'
 - LandRace
 - Normal AirRace
 
-# List of all possible Racetypes with corresponding gameids
+# List of all possible racetypes with corresponding gameids
 ```
 	[0] = "Landrace",
 	[1] = "LandraceP2P",
@@ -35,15 +35,17 @@ to stop the current race do '/race stop'
 ```
 
 ## TODO
-- ~In-game non-admin command execution works but some things do not get loaded~
-- ~Old Rocket Pickups do not work~
-- Different Checkpoint types like air races
 - Fake Checkpoints
-- ~Proper Respawn after explosison~
+- Warp Checkpoints
+- Plane Angle Checkpoints
+- Transform Checkpoints
 - Vehicle Selection Menu using NativeUI
 - Camera Focus on next checkpoint
 - Vehicle Special Ability Chargeup
-- Special Checkpoints
+
+Current goal is to make a race happen like [MEGA RAMPS](https://socialclub.rockstargames.com/job/gtav/ktMmi_gQFkGqGcoNdqDjmA)
+
+
 
 
 

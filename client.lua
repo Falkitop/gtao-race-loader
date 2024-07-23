@@ -4,6 +4,11 @@ PlayerPed = GetPlayerPed(-1)
 StartLoc = nil
 StartHead = nil
 
+
+function IsInRace()
+	return loadedUGC['mission'] ~= nil
+end
+
 local GetPropSpeedModificationParameters
 --Special Props
 do
