@@ -14,15 +14,36 @@ use it by '/race [id]'
 or a random race with '/race rand'
 to stop the current race do '/race stop'
 
+# Fully Supports
+- LandRace
+- Normal AirRace
+
+# List of all possible Racetypes with corresponding gameids
+'
+	[0] = "Landrace",
+	[1] = "LandraceP2P",
+	[2] = "WaterRace",
+	[3] = "WaterRaceP2P",
+	[4] = "AirRace",
+	[5] = "AirRaceP2P",
+	[6] = "StuntRace / SpecialRace",
+	[7] = "StuntRaceP2P / TransformRace",
+	[12] = "BikeRace",
+	[13] = "BikeRaceP2P",
+	[24] = "OpenWheelRace",
+	[26] = "PursuitRace"
+'
 
 ## TODO
 - ~In-game non-admin command execution works but some things do not get loaded~
 - ~Old Rocket Pickups do not work~
-- Only one (pre Cunning Stunts) race type is supported
 - Different Checkpoint types like air races
 - Fake Checkpoints
 - ~Proper Respawn after explosison~
 - Vehicle Selection Menu using NativeUI
 - Camera Focus on next checkpoint
 - Vehicle Special Ability Chargeup
+- Special Checkpoints
+
+
 

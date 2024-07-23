@@ -57,18 +57,11 @@ AddEventHandler('playerloadedrace', function(playerid)
 	end
 end)
 
-
-
-
-
-
-
 RegisterNetEvent('playerenteredfinish')
 AddEventHandler('playerenteredfinish', function(playerped)
 	local txt = "~h~"..GetPlayerName(playerped+1).."~h~ has reached the finish line "
 	TriggerClientEvent("shownotification", -1, txt)
 end)
-
 
 --RaceTimerLoop
 Citizen.CreateThread(function()

@@ -60,33 +60,8 @@ local ModTypes = {
 
 local function RespawnVehicleAtLastCheckpoint()
 
-
-    
-
-    -- local ModelHash = GetEntityModel(CurrentVehicle)
-
-    -- RequestModel(ModelHash) -- Request the model
-
-    -- if not IsModelInCdimage(ModelHash) then return end
-
-    -- while not HasModelLoaded(ModelHash) do -- Waits for the model to load
-    --     Wait(0)
-    -- end
-
     local coords = CurrentCheckpointLoc
     local head = CurrentCheckpointHead
-
-    -- DeleteEntity(CurrentVehicle)
-
-    -- CurrentVehicle = CreateVehicle(ModelHash, coords, head, true, false) -- Spawns a networked vehicle on your current coords
-    
-    -- while not DoesEntityExist(CurrentVehicle) do
-    --     print("aa")
-    --     Wait(0)
-    -- end
-
-    -- SetModelAsNoLongerNeeded(ModelHash) 
-
     SetVehicleFixed(CurrentVehicle)
     StopEntityFire(CurrentVehicle)
     SetEntityCoords(CurrentVehicle, coords)
@@ -107,7 +82,7 @@ Citizen.CreateThread(function()
             end
         end
         --print(GetDisplayNameFromVehicleModel(GetEntityModel(CurrentVehicle)))
-        Citizen.Wait(1000)
+        Citizen.Wait(500)
         
     end
 end)

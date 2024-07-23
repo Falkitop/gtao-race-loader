@@ -113,8 +113,8 @@ AddEventHandler('updateracetimer', function(newtime)
 end)
 
 
-RegisterNetEvent('updatecheckpoint')
-AddEventHandler('updatecheckpoint', function(checkpointindex, maxcheckpointindex)
+RegisterNetEvent('uiupdatecheckpointnum')
+AddEventHandler('uiupdatecheckpointnum', function(checkpointindex, maxcheckpointindex)
 	SendNUIMessage({
 		action = 'updatecheckpoint',
 		checkpoint = checkpointindex.."/"..maxcheckpointindex
