@@ -7,21 +7,29 @@ RegisterCommand("race", function(source --[[ this is the player ID (on the serve
 		return
 	end	
 	
-	local handle = io.popen('python ' .. GetResourcePath(GetCurrentResourceName()) .. '/lua_getrace.py '.. args[1])
-	local output = handle:read("*all")
 
+	local output = nil
+
+
+	Citizen.CreateThread(function()
+		local handle = io.popen('python ' .. GetResourcePath(GetCurrentResourceName()) .. '/lua_getrace.py '.. args[1])
+		output = handle:read("*all")
+
+		while output == nil do 
+			Wait(1)
+			print(1)
+		end
+
+
+		handle:close()
+		output = json.decode(output)
+		print("Loading Map: "..output[1])
+
+		local parserOutput, err = ParseMissionJSON(output[2])
+		if(err ~= nil) then print(err) end
+		TriggerClientEvent("loadrace", -1, parserOutput)
+		RaceLoad()
+
+	end)
 	--print('python ' .. GetResourcePath(GetCurrentResourceName()) .. '/lua_getrace.py '.. args[1])
-
-	handle:close()
-	output = json.decode(output)
-	print("Loading Map: "..output[1])
-
-	local parserOutput, err = ParseMissionJSON(output[2])
-	
-
-	if(err ~= nil) then print(err) end
-	TriggerClientEvent("loadrace", -1, parserOutput)
-
-    RaceLoad()
-
 end, false)

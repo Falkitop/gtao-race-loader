@@ -46,6 +46,7 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 
 
 	NextCheckpointBlip = AddBlipForCoord(loc)
+
 	if(finish) then
 		NextCheckpoint = CreateCheckpoint(chtypefin, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
 		SetBlipSprite(NextCheckpointBlip, 38)
@@ -54,7 +55,7 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 	end	
 
 	SetCheckpointRgba2(NextCheckpoint, cIR, cIG, cIB, cIA)
-	SetCheckpointCylinderHeight(cp, 10.0, 5.0, 5.0)
+	SetCheckpointCylinderHeight(NextCheckpoint, 10.0, 5.0, 5.0)
 
 end
 
