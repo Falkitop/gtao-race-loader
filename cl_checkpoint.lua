@@ -2,7 +2,7 @@ CurrentCheckpointIndex = 0 --Starts at 0
 local NextCheckpoint = nil
 local NextCheckpointBlip = nil
 local NextTransformCheckpointMarker = nil
-local NextCheckpointRadius = nil
+local NextCheckpointRadius = 0
 CurrentCheckpointHead = nil
 CurrentCheckpointLoc = nil
 
@@ -35,10 +35,12 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 		chtype = 0
 		chtypefin = 4
 		NextCheckpointRadius = 10.0
+
 	else
 		chtype = 13
 		chtypefin = 16
 		NextCheckpointRadius = 50.0
+
 	end
 	
 	if(finish) then
@@ -173,10 +175,11 @@ end)
 Citizen.CreateThread(function()
 	while true
 		do
+			
 			--If no race is loaded
 			if(not IsInRace()) then goto continue end
-		  	
-			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId()), true) <= (NextCheckpointRadius) then -- Entered checkpoint
+			
+			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId(-1)), true) <= (NextCheckpointRadius) then -- Entered checkpoint
 				
 
 				--Teleport
