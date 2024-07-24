@@ -62,19 +62,23 @@ AddEventHandler('playerenteredfinish', function(playerped)
 	local txt = "~h~"..GetPlayerName(playerped+1).."~h~ has reached the finish line "
 	TriggerClientEvent("shownotification", -1, txt)
 end)
-
+StartRaceTimer()
 --RaceTimerLoop
 Citizen.CreateThread(function()
 	while true do
 		if(RaceStartTimestamp ~= nil) then
 			local time = (GetGameTimer()-RaceStartTimestamp)
-			time = time/1000
-			
+			local milliseconds = math.floor( time/10 )
+			local seconds1 = math.fmod( math.floor( milliseconds/1000 ), 6 ) --0-6
+			local seconds2 = math.fmod( math.floor( milliseconds/100 ), 10 ) --0-9
 
-			time = math.floor( time/60 ).."."..math.floor( math.fmod( time,60 ) )
+			local minutes2 = math.floor( math.floor( math.floor( milliseconds/1000 ) / 6 ) / 10 )
+			local minutes3 = math.floor( math.floor( milliseconds/1000 ) / 6 )
+			
+			time = minutes2..minutes3.."/"..seconds1..seconds2.."/"..math.floor( math.fmod( milliseconds,100 )/10 )..math.fmod( math.fmod( milliseconds,100 ),10 )
 			TriggerClientEvent("updateracetimer", -1, time)
 		end
-		Citizen.Wait(1000)--this is shit > its not one full second, it skips some milliseconds
+		Citizen.Wait(1)--this is shit > its not one full second, it skips some milliseconds
 	end
 end)
 
