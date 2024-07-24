@@ -42,16 +42,20 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 		NextCheckpointRadius = 50.0
 
 	end
-	
+
+
+
+	NextCheckpointBlip = AddBlipForCoord(loc)
 	if(finish) then
 		NextCheckpoint = CreateCheckpoint(chtypefin, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
+		SetBlipSprite(NextCheckpointBlip, 38)
 	else
 		NextCheckpoint = CreateCheckpoint(chtype, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
 	end	
 
 	SetCheckpointRgba2(NextCheckpoint, cIR, cIG, cIB, cIA)
 	SetCheckpointCylinderHeight(cp, 10.0, 5.0, 5.0)
-	NextCheckpointBlip = AddBlipForCoord(loc)
+
 end
 
 local function CreateTransformCheckpoint(loc, nextloc)
@@ -178,7 +182,7 @@ Citizen.CreateThread(function()
 			
 			--If no race is loaded
 			if(not IsInRace()) then goto continue end
-			
+
 			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId(-1)), true) <= (NextCheckpointRadius) then -- Entered checkpoint
 				
 
