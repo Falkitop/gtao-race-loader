@@ -24,7 +24,6 @@ server_scripts {
 	"MissionJSON.lua",
 	"server.lua",
 	"sv_command.lua",
-	"sv_respawn.lua",
 } 
 
 author 'Falkitop'
