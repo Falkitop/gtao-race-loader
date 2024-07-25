@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
 	while true
 		do
             
-            if not(IsInRace()) then goto continue end
+            if not(IsInRace) then goto continue end
 
 			DisableControlAction(0, 75, true) -- To prevent just exiting vehicle
 

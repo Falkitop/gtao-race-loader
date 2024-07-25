@@ -182,7 +182,7 @@ Citizen.CreateThread(function()
 		do
 			
 			--If no race is loaded
-			if(not IsInRace()) then goto continue end
+			if(not IsInRace) then goto continue end
 
 			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId(-1)), true) <= (NextCheckpointRadius) then -- Entered checkpoint
 				

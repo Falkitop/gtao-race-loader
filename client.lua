@@ -1,13 +1,14 @@
 isLoadingMap = false
 loadedUGC = {}
 PlayerPed = GetPlayerPed(-1)
+IsInRace = false
 StartLoc = nil
 StartHead = nil
 
 
-function IsInRace()
-	return loadedUGC['mission'] ~= nil
-end
+-- function IsInRace()
+-- 	return loadedUGC['mission'] ~= nil
+-- end
 
 local GetPropSpeedModificationParameters
 --Special Props
@@ -197,6 +198,7 @@ RegisterNetEvent('stoprace')
 AddEventHandler('stoprace', function()
 	UnloadRace()
 	HideRaceInfoUI()
+	IsInRace = false
 end)
 
 RegisterNetEvent('loadrace')
@@ -221,6 +223,7 @@ end)
 RegisterNetEvent('startactualrace')
 AddEventHandler('startactualrace', function()
 	ShowRaceInfoUI()
+	IsInRace = true
 end)
 
 function ABC()
