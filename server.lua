@@ -75,8 +75,8 @@ Citizen.CreateThread(function()
 			local minutes2 = math.floor( math.floor( math.floor( milliseconds/1000 ) / 6 ) / 10 )
 			local minutes3 = math.floor( math.floor( milliseconds/1000 ) / 6 )
 			
-			time = minutes2..minutes3.."/"..seconds1..seconds2.."/"..math.floor( math.fmod( milliseconds,100 )/10 )..math.fmod( math.fmod( milliseconds,100 ),10 )
-			TriggerClientEvent("updateracetimer", -1, time)
+			time = minutes2..minutes3..":"..seconds1..seconds2..":".. string.format( "%.2d",math.fmod( milliseconds,100 ) ) --leading zeros
+			TriggerClientEvent("updateracetimer", -1, time) 
 		end
 		Citizen.Wait(1)--this is shit > its not one full second, it skips some milliseconds
 	end
