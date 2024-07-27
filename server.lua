@@ -1,12 +1,6 @@
 local RaceStartTimestamp = nil
 local PlayersLoadedRace = {}
-local RaceStarted = false
 
-
-RegisterNetEvent('getracestarted')
-AddEventHandler('getracestarted', function()
-	return RaceStarted
-end)
 
 local function StartRaceTimer()
 	RaceStartTimestamp = GetGameTimer()

@@ -40,6 +40,7 @@ to stop the current race do '/race stop'
 - Vehicle Selection Menu using NativeUI
 - Camera Focus on next checkpoint
 - Vehicle Special Ability Chargeup
+- Startboost
 
 Current goal is to make a race happen like [MEGA RAMPS](https://socialclub.rockstargames.com/job/gtav/ktMmi_gQFkGqGcoNdqDjmA)
 

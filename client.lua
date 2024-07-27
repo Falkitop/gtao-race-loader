@@ -4,11 +4,7 @@ PlayerPed = GetPlayerPed(-1)
 IsInRace = false
 StartLoc = nil
 StartHead = nil
-
-
--- function IsInRace()
--- 	return loadedUGC['mission'] ~= nil
--- end
+WaitingForCountdownFinish = false
 
 local GetPropSpeedModificationParameters
 --Special Props
@@ -218,13 +214,22 @@ AddEventHandler('loadrace', function(ugc)
 	SetPedCoordsKeepVehicle(GetPlayerPed(-1), loc)
 	SetEntityHeading(GetVehiclePedIsIn(GetPlayerPed(-1)), head)
 	SetGameplayCamRelativeHeading(0)
+	WaitingForCountdownFinish = true
 end)
 
 RegisterNetEvent('startactualrace')
 AddEventHandler('startactualrace', function()
 	ShowRaceInfoUI()
 	IsInRace = true
+	WaitingForCountdownFinish = false
 end)
 
-function ABC()
-end
+Citizen.CreateThread(function()
+	while true do
+		print(CurrentVehicle ~= nil)
+		if(CurrentVehicle ~= nil) then
+			SetVehicleHandbrake(CurrentVehicle, WaitingForCountdownFinish)
+		end
+		Wait(0)
+	end
+end)
