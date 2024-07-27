@@ -80,7 +80,7 @@ Citizen.CreateThread(function()
         if(CurrentWeapon == nil) then goto SkipAll end
 
         --Use'em
-        if(IsControlPressed(0, 86)) then
+        if(IsControlJustPressed(0, 86)) then
 
             local playerPed = GetPlayerPed(-1)
 

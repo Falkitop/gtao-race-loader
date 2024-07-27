@@ -59,9 +59,39 @@ local function CreateCommonCheckpoint(type, finish, loc, nextloc)
 
 end
 
-local function CreateTransformCheckpoint(loc, nextloc)
+local function CreateTransformCheckpoint(vehiclehash, loc, nextloc)
 	NextCheckpointRadius = 50.0
 	NextCheckpoint = CreateCheckpoint(42, loc, nextloc, NextCheckpointRadius, CPTr, CPTg, CPTb, CPTa, 100, 100)
+
+	local MarkerType = 40 --Foot
+
+	if(IsThisModelACar(vehiclehash)) then
+		MarkerType = 36
+	elseif(IsThisModelABike(vehiclehash)) then
+		MarkerType = 37
+	elseif(IsThisModelABike(vehiclehash)) then
+		MarkerType = 37
+	elseif(IsThisModelABicycle(vehiclehash)) then
+		MarkerType = 38
+	elseif(IsThisModelABoat(vehiclehash)) then
+		MarkerType = 35
+	elseif(IsThisModelAHeli(vehiclehash)) then
+		MarkerType = 34
+	elseif(IsThisModelAJetski(vehiclehash)) then
+		MarkerType = 35
+	elseif(IsThisModelAPlane(vehiclehash)) then
+		MarkerType = 33	
+	elseif(IsThisModelAQuadbike(vehiclehash)) then
+		MarkerType = 37	
+	elseif(IsThisModelATrain(vehiclehash)) then
+		MarkerType = 39	
+	elseif(IsThisModelAnAmphibiousCar(vehiclehash)) then
+		MarkerType = 36	
+	elseif(IsThisModelAnAmphibiousQuadbike(vehiclehash)) then
+		MarkerType = 37	
+	end
+
+	SetMarker(MarkerType, loc, vector3(0, 0, 0), vector3(25, 25, 25), cIR, cIG, cIB, cIA)
 	NextCheckpointBlip = AddBlipForCoord(loc)
 	SetBlipSprite(NextCheckpointBlip, 570)
 	SetBlipColour(NextCheckpointBlip, 1)
@@ -83,22 +113,22 @@ local function CreateTeleportCheckpoint(loc, nextloc)
 	NextCheckpointRadius = 50.0
 	NextCheckpoint = CreateCheckpoint(42, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
 	NextCheckpointBlip = AddBlipForCoord(loc)
-	CreateMarker(42, loc, vector3(0, 0, 0), vector3(25, 25, 25), cIR, cIG, cIB, cIA)
-
+	SetMarker(42, loc, vector3(0, 0, 0), vector3(25, 25, 25), cIR, cIG, cIB, cIA)
 end
 
 local function IsTransformCheckpoint(index)
 	if(loadedUGC['mission']['race']["cptfrm"] == nil) then return false end
 	return loadedUGC['mission']['race']["cptfrm"][index] > 0
 	--0 is the vehicle that you have at the beginning
+	--Change this to -1 when it can change back to beginning vehicle
 end
 
 local function IsTeleportCheckpoint(index)
 
 	if(loadedUGC['mission']['race']["cpbs1"] == nil) then return false end
-	return loadedUGC['mission']['race']["cpbs1"][index] == 134217731 --Why is 1 a null value for a json string???
+	return loadedUGC['mission']['race']["cpbs1"][index] == 134217731
 	--[[
-
+	Why is 1 a null value for a json string???
 	THIS IS ALL JUST A MAYBE
 	134217731 => TeleportPoint
 	515 => TransformPoint
@@ -131,7 +161,9 @@ function LoadNextCheckpoint()
 	if(IsTransformCheckpoint(CurrentCheckpointIndex+1)) then
 		loc = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1]
 		nextloc = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+2]
-		CreateTransformCheckpoint(loc, nextloc)
+		local TransformCheckpointHashIndex = loadedUGC['mission']['race']["cptfrm"][CurrentCheckpointIndex+1]
+		local TransformVehicleHash = loadedUGC['mission']['race']["trfmvm"][TransformCheckpointHashIndex+1]
+		CreateTransformCheckpoint(TransformVehicleHash, loc, nextloc)
 		return
 	end
 
@@ -152,7 +184,7 @@ function LoadNextCheckpoint()
 end
 
 --NOT YET IMPLEMENTED
-function CreateMarker(Type, pos, dir, scale, r, g, b, a)
+function SetMarker(Type, pos, dir, scale, r, g, b, a)
 	NextTransformCheckpointMarker = {Type, pos, dir, dir, scale, r, g, b, a}
 end
 --Markerloop (stupid)
@@ -192,13 +224,17 @@ Citizen.CreateThread(function()
 					SetPedCoordsKeepVehicle(GetPlayerPed(-1), loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+2])
 				end
 
-
-
 				--Transform
 				if(IsTransformCheckpoint(CurrentCheckpointIndex+1)) then
 					local TransformCheckpointHashIndex = loadedUGC['mission']['race']["cptfrm"][CurrentCheckpointIndex+1]
-					print(TransformCheckpointHashIndex)
+					print("TransformCheckpointHashIndex is: "..TransformCheckpointHashIndex)
 					local TransformVehicleHash = loadedUGC['mission']['race']["trfmvm"][TransformCheckpointHashIndex+1] --+1 because lua index starts at 1
+					
+					--[[
+						HIALIOUS JOKE FROM ROCKSTAR DEV
+						If transforming to foot, the hash for the vehicle is a dildo...
+					]]
+				
 					RequestModel(TransformVehicleHash)
 					while not HasModelLoaded(TransformVehicleHash) do
 						Wait(1)
@@ -210,10 +246,8 @@ Citizen.CreateThread(function()
 					SetEntityVelocity(newVeh, GetEntityForwardVector(newVeh)*curVel)
 					SetVehicleEngineOn(newVeh, true, true, false)
 					SetModelAsNoLongerNeeded(TransformVehicleHash)
-					print("Transformed into" .. TransformVehicleHash)
+					print("Transformed into " .. TransformVehicleHash)
 				end
-
-
 
                 --Use diffferent sound for finish goal
 				if(#loadedUGC['mission']['race']["chl"] == CurrentCheckpointIndex+1) then

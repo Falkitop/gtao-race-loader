@@ -226,7 +226,6 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		print(CurrentVehicle ~= nil)
 		if(CurrentVehicle ~= nil) then
 			SetVehicleHandbrake(CurrentVehicle, WaitingForCountdownFinish)
 		end
