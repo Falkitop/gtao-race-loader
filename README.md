@@ -13,9 +13,6 @@ A Database is required that has all the races included in two columns named `id`
 I have uploaded one with around 100.000 Races to [GTA5Mods](https://www.gta5-mods.com/tools/database-of-14000-gta-online-races-topicyeah#comments_tab).
 Just Place the database named race.db into the resource folder.
 
-FOR FUTURE NOT YET:
-[LuaSQLite3](http://lua.sqlite.org/index.cgi/index) => Just place it into the folder
-
 use it by '/race [id]'
 or a random race with '/race rand'
 to stop the current race do '/race stop'
