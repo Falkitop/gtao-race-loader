@@ -58,18 +58,23 @@ local ModTypes = {
 
 
 
-local function RespawnVehicleAtLastCheckpoint()
-
+local function RespawnVehicleOrPlayerToLastCheckpoint()
     local coords = CurrentCheckpointLoc
     local head = CurrentCheckpointHead
-    SetVehicleFixed(CurrentVehicle)
-    StopEntityFire(CurrentVehicle)
-    SetEntityCoords(CurrentVehicle, coords)
-    SetEntityHeading(CurrentVehicle, head)
 
-    SetVehicleEngineOn(CurrentVehicle, true, true, false)
-    TaskWarpPedIntoVehicle(GetPlayerPed(-1), CurrentVehicle, -1)
-    SetGameplayCamRelativeHeading(0)
+    if(CurrentVehicle == nil) then --Probably on foot
+        SetEntityCoords(GetPlayerPed(-1), coords)
+        SetEntityHeading(GetPlayerPed(-1), head)
+    else
+        SetVehicleFixed(CurrentVehicle)
+        StopEntityFire(CurrentVehicle)
+        SetEntityCoords(CurrentVehicle, coords)
+        SetEntityHeading(CurrentVehicle, head)
+    
+        SetVehicleEngineOn(CurrentVehicle, true, true, false)
+        TaskWarpPedIntoVehicle(GetPlayerPed(-1), CurrentVehicle, -1)
+        SetGameplayCamRelativeHeading(0)
+    end
 end
 
 --Check for new Vehicle
@@ -114,12 +119,11 @@ Citizen.CreateThread(function()
 			end
 
 			if IsDisabledControlJustReleased(0, 75) then
-                print(Respawning)
-                print(RespawnDelta)
-                print(PlayerPed)
-                print(CurrentVehicle)
+                print("Respawning: "..tostring(Respawning))
+                print("RespawnDelta: "..tostring(RespawnDelta))
+                print("PlayerPed: "..tostring(PlayerPed))
+                print("CurrentVehicle: "..tostring(CurrentVehicle))
 				if (RespawnDelta < 1 and Respawning == false) then
-                    
 					TaskLeaveVehicle(PlayerPed, GetVehiclePedIsIn(PlayerPed))
 				end
 				RespawnDelta = 0
@@ -131,7 +135,9 @@ Citizen.CreateThread(function()
 			if (RespawnDelta > 1) then
                 Respawning = true
                 RespawnDelta = 0
-                RespawnVehicleAtLastCheckpoint()
+                RespawnVehicleOrPlayerToLastCheckpoint()
+
+                
 
 
 

@@ -69,8 +69,6 @@ local function CreateTransformCheckpoint(vehiclehash, loc, nextloc)
 		MarkerType = 36
 	elseif(IsThisModelABike(vehiclehash)) then
 		MarkerType = 37
-	elseif(IsThisModelABike(vehiclehash)) then
-		MarkerType = 37
 	elseif(IsThisModelABicycle(vehiclehash)) then
 		MarkerType = 38
 	elseif(IsThisModelABoat(vehiclehash)) then
