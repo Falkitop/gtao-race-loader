@@ -16,7 +16,7 @@ client_scripts {
 	"cl_gui.lua",
 	"cl_respawn.lua",
 	"cl_focuscam.lua",
-	"@NativeUI/NativeUI.lua",
+	"ScaleformUI.lua",
 }
 
 
@@ -24,6 +24,8 @@ server_scripts {
 	"MissionJSON.lua",
 	"server.lua",
 	"sv_command.lua",
+	"sv_ weapons.lua",
+	"sv_racemanager.lua",
 } 
 
 author 'Falkitop'

@@ -14,16 +14,21 @@ local function UpdateWeapon(newWeapon)
 
 end
 
-local function CreateWeapon(hash, loc, head)
+local function CreateWeapon(hash, blipid, loc, head)
     
     RequestModel(hash)
     local newObj = CreateObject(hash, loc, false, true, false)
     loadedUGC.objects[#loadedUGC.objects+1] = newObj -- Save as early as possible so we can still undo!
-    table.insert( UtilObjs, newObj )
+
+    local blip = AddBlipForCoord(loc)
+    SetBlipSprite(blip, blipid)
+
+    table.insert( UtilObjs, {newObj, blip, 0})
 
     FreezeEntityPosition(newObj, true)
     SetEntityHeading(newObj, head)
     SetEntityCollision(newObj, false, false)
+
 end
 
 function LoadUtils()
@@ -36,9 +41,9 @@ function LoadUtils()
 
     for i=1,amount do
         if(sub[i] == 0) then
-            CreateWeapon(-1531914544, locs[i], heads[i])--Rocket
+            CreateWeapon(-1531914544, 368, locs[i], heads[i])--Rocket
         elseif (sub[i] == 2)then 
-            CreateWeapon(1709896882, locs[i], heads[i])--Boost
+            CreateWeapon(1709896882, 354, locs[i], heads[i])--Boost
         end
     end
 
@@ -52,21 +57,32 @@ Citizen.CreateThread(function()
 
         if (UtilObjs == nil) then goto SkipAll end
         
-        -- Collect'em!
         for i=1,#UtilObjs do
-            --if not(DoesEntityExist(UtilObjs[i])) then table.remove( UtilObjs, i ) end ACTUALLY MAYBE NOT NEEDED?
             
-            --Needs to be in loop so that all weapons are instantly kicked
-            if(CurrentWeapon ~= nil) then goto SkipPickup end
+            
+            --So they unhide after certain amount of time
+            
+            if(GetGameTimer() - UtilObjs[i][3] > 2000) then
+                SetEntityVisible(UtilObjs[i][1], true, 0)
+            end
 
-            local loc = GetEntityCoords(UtilObjs[i])
-            if not (IsEntityVisible(UtilObjs[i])) then goto continue end
+
+
+            -- Collect'em!
+
+            --Needs to be in loop so that all weapons are instantly skipped
+            if(CurrentWeapon ~= nil) then goto continue end
+
+            local loc = GetEntityCoords(UtilObjs[i][1])
+            if not (IsEntityVisible(UtilObjs[i][1])) then goto continue end
             
             --DrawLine(GetEntityCoords(GetPlayerPed(-1)), loc, 255, 255, math.ceil( GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc)), 255)
             
             if(GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), loc) <= (10)) then
-                SetEntityVisible(UtilObjs[i], false, 0)
-                if(GetEntityModel(UtilObjs[i]) == -1531914544) then --Rocket
+                SetEntityVisible(UtilObjs[i][1], false, 0)
+                UtilObjs[i][3] = GetGameTimer()
+                RemoveBlip(UtilObjs[i][2])
+                if(GetEntityModel(UtilObjs[i][1]) == -1531914544) then --Rocket
                     UpdateWeapon(0)
                 else
                     UpdateWeapon(1)

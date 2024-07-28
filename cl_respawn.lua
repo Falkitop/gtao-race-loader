@@ -94,6 +94,7 @@ end)
 
 RegisterNetEvent('playerSpawned')
 AddEventHandler('playerSpawned', function(spawnInfo)
+    if not(IsInRace)then return end
     Wait(10) -- Has to be done otherwise the code is stuck at creating vehicle
     RespawnVehicleAtLastCheckpoint()
     --TriggerServerEvent("respawnvehicleatcoords", GetPlayerPed(-1), 1 , 1)
