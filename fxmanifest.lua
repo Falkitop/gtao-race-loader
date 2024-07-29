@@ -8,18 +8,17 @@ files{
 }
 
 client_scripts {
-	"ScaleformUI.lua",
+	"vehicledata.lua",
+	"@ScaleformUI/ScaleformUI.lua",
 	"MissionJSON.lua",
 	"client.lua",
 	"cl_world.lua",
 	"cl_checkpoint.lua",
 	"cl_weapons.lua",
 	"cl_gui.lua",
-	"cl_startgui.lua",
 	"cl_respawn.lua",
 	"cl_focuscam.lua",
 	"cl_trackmanager.lua",
-
 }
 
 

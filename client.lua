@@ -206,6 +206,7 @@ AddEventHandler('loadrace', function(ugc)
 	LoadUtils()
 	LoadNextCheckpoint()
 
+
 	
 	--Set Player Location
 	loc = loadedUGC['mission']['veh']['loc'][GetPlayerServerId(PlayerId())]-- I HAVENT TESTED IF the id works for others
@@ -215,7 +216,7 @@ AddEventHandler('loadrace', function(ugc)
 	CurrentCheckpointLoc = loc
 	SetPedCoordsKeepVehicle(GetPlayerPed(-1), loc)
 	SetEntityHeading(GetVehiclePedIsIn(GetPlayerPed(-1)), head)
-	SetGameplayCamRelativeHeading(0)
+	SpawnPlayerWithRandomVehicle(loc, head)
 	WaitingForCountdownFinish = true
 end)
 

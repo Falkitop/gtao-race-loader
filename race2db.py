@@ -127,7 +127,7 @@ def GetRaceData(id):
         for j in range(500):#500
             for lang in ["en", "ja", "zh", "zh-cn", "fr", "de", "it", "ru", "pt", "pl", "ko", "es", "es-mx"]:
                 url = f"https://prod.cloud.rockstargames.com/ugc/gta5mission/{id}/{i}_{j}_{lang}.json"
-                time.sleep(0.5)
+                #time.sleep(0.5)
                 response =  requests.request("GET", url, timeout=(connect_timeout, read_timeout))
                 print("Trying " + url)
                 if response.status_code == 200:

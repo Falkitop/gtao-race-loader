@@ -1,6 +1,15 @@
-StartedVehicle = nil
+StartVehicleHash = nil
 CurrentVehicle = nil
 
+function SetPlayerIntoVehicle(vehicle)
+    SetVehicleRadioEnabled(vehicle)
+    SetVehicleEngineOn(vehicle, true, true, false)
+    ClearPedTasks(GetPlayerPed(-1))
+    ClearPedTasksImmediately(GetPlayerPed(-1))
+    ClearPedSecondaryTask(GetPlayerPed(-1))
+    TaskWarpPedIntoVehicle(GetPlayerPed(-1), vehicle, -1)
+    SetGameplayCamRelativeHeading(0)
+end
 
 local function RespawnVehicleOrPlayerToLastCheckpoint()
     local coords = CurrentCheckpointLoc
@@ -14,13 +23,8 @@ local function RespawnVehicleOrPlayerToLastCheckpoint()
         StopEntityFire(CurrentVehicle)
         SetEntityCoords(CurrentVehicle, coords)
         SetEntityHeading(CurrentVehicle, head)
-    
-        SetVehicleEngineOn(CurrentVehicle, true, true, false)
-        ClearPedTasks(GetPlayerPed(-1))
-        ClearPedTasksImmediately(GetPlayerPed(-1))
-        ClearPedSecondaryTask(GetPlayerPed(-1))
-        TaskWarpPedIntoVehicle(GetPlayerPed(-1), CurrentVehicle, -1)
-        SetGameplayCamRelativeHeading(0)
+        SetPlayerIntoVehicle(CurrentVehicle)
+
     end
 end
 
@@ -94,4 +98,50 @@ Citizen.CreateThread(function()
 	end
 
 end)
+
+
+--[[    VEHICLE SPAWNER    ]]
+local function GetVehicles()
+    local classes = loadedUGC['meta']['vehcl']
+    local vehicles = {}
+    for iclass=1,#classes do
+        for k, v in pairs(VehicleClasses) do
+          
+            if(classes[iclass] == k) then
+
+                for ivehicle=1,#v do 
+                    table.insert(vehicles, v[ivehicle])
+                end
+            end
+        end
+    end
+    return vehicles
+end
+
+function SpawnPlayerWithRandomVehicle(loc, head)
+    local vehicles = GetVehicles()
+    local vehicle = vehicles[ math.random( #vehicles ) ]
+
+    local modelHash = GetHashKey(vehicle)
+    RequestModel(modelHash)
+    while not HasModelLoaded(modelHash) do
+      Wait(0)
+    end
+
+    if(IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
+        DeleteEntity(GetVehiclePedIsIn(GetPlayerPed(-1)))
+    end
+    
+    local vehicle = CreateVehicle(modelHash, loc, head, false, false)
+
+    while not DoesEntityExist(vehicle) do
+        Wait(0)
+    end
+    
+
+    SetPlayerIntoVehicle(vehicle)
+    StartVehicleHash = modelHash
+
+end
+--[[    VEHICLE SPAWNER    ]]
 

@@ -223,6 +223,22 @@ local function DrawText3D(loc, text) -- some useful function, use it if you want
     end
 end
 
+
+local function TransformIntoVehicle(TransformVehicleHash)
+	RequestModel(TransformVehicleHash)
+	while not HasModelLoaded(TransformVehicleHash) do
+		Wait(0)
+	end
+	local newVeh = CreateVehicle(TransformVehicleHash, track.race.ChLocs[CurrentCheckpointIndex+1],track.race.ChHeads[CurrentCheckpointIndex+1], true, false)
+	local curVel = 30
+	while not DoesEntityExist(newVeh) do
+		Wait(0)
+	end
+	SetEntityVelocity(newVeh, GetEntityForwardVector(newVeh)*curVel)
+	DeleteEntity(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+	SetPlayerIntoVehicle(newVeh)
+end
+
 --Entered Checkpoint
 Citizen.CreateThread(function()
 	while true
@@ -230,7 +246,7 @@ Citizen.CreateThread(function()
 
 
 			--If no race is loaded
-			if(not IsInRace) then goto continue end
+			if not (IsInRace or WaitingForCountdownFinish) then goto continue end
 
 
 			-- for i=1,#loadedUGC['mission']['race']["chl"] do
@@ -258,26 +274,24 @@ Citizen.CreateThread(function()
 						if transforming to foot, the hash for the vehicle is a d1ldo...
 					]]
 
-					if TransformVehicleHash == -422877666 then -- parachute
+					if (TransformVehicleHash == -422877666) then -- parachute
 						DeleteEntity(GetVehiclePedIsIn(PlayerPedId(-1), false))
 						GiveWeaponToPed(GetPlayerPed(-1), "GADGET_PARACHUTE", 1, false, false)
-						goto continue
+						goto SkipTransform
 					end
 
-					RequestModel(TransformVehicleHash)
-					while not HasModelLoaded(TransformVehicleHash) do
-						Wait(1)
+					if(TransformVehicleHash == 0) then
+						TransformIntoVehicle(StartVehicle)
+						goto SkipTransform
 					end
-					local newVeh = CreateVehicle(TransformVehicleHash, loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1],loadedUGC['mission']['race']["chh"][CurrentCheckpointIndex+1], true, false)
-					local curVel = 30
-					DeleteEntity(GetVehiclePedIsIn(GetPlayerPed(-1), false))
-					TaskWarpPedIntoVehicle(GetPlayerPed(-1), newVeh, -1)
-					SetEntityVelocity(newVeh, GetEntityForwardVector(newVeh)*curVel)
-					SetVehicleEngineOn(newVeh, true, true, false)
-					SetModelAsNoLongerNeeded(TransformVehicleHash)
+
+
+					TransformIntoVehicle(TransformVehicleHash)
+
 
 					print("Transformed into " .. TransformVehicleHash)
 				end
+				::SkipTransform::
 
                 --Use diffferent sound for finish goal
 				if(#loadedUGC['mission']['race']["chl"] == CurrentCheckpointIndex+1) then
