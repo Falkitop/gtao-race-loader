@@ -5,3 +5,4 @@ ScrapeTots.txt
 keywords.txt
 URLHandler.lua
 *.json
+*.sch

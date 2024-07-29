@@ -8,55 +8,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.cdnfonts.com/css/pricedown" rel="stylesheet">
-                
+
 </head>
 <style>
     @font-face {
         font-family: "ChaletComprime";
-        src: url(ChaletLondonNineteenSixtyFont.ttf) format("truetype");
+        src: url(ChaletLondonNineteenSixtyRegular.otf) format("truetype");
     }
 
     .pricedown{
         font-family: 'Pricedown Bl', sans-serif;/*Font is off*/
     }
-    .textinfo{
-        font-family: "ChaletComprime", sans-serif;/*Font is off*/
+    .chaletcomprime{
+        font-family: "ChaletComprime", sans-serif;
         font-optical-sizing: auto;
-        font-weight: 100;
+        font-weight: 1;
         font-style: normal;
-        /* --webkit-text-stroke: 0.3pt rgb(255, 255, 255); */
         color: white;
 
     }
-    .infoelement{
-        padding: 0pt;
-        padding-left: 10pt;
-        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.75) 53%, rgba(0,0,0,0.8) 90%);
-        display: flex;
-        justify-content: space-between;
-        margin: 2.5pt 0;
-        padding-top: 1pt;
-        padding-bottom: 1pt;
-        height: 20pt;
-    }
-    .infoval{
-        text-align: right;
-        float: right;
-        margin: 0;
-        margin-right:5pt;
-        padding: 0;
-        width: 100pt;
-        font-size: 16pt;
-    }
-    .infotxt{
-        font-size: 10pt;
-        margin: 1pt 5pt;
-        padding: 0;
-        margin-right: 0;
-        margin-left: auto;
-        margin-top: auto;
-        margin-bottom: 3pt;
-    }
+
     .countdowncircle {
     height: 130pt;
     width: 130pt;
@@ -70,11 +41,7 @@
 
     }
 
-    .raceinfo{
-        background-color: rgba(0,0,0,0.8);
-        height: 300pt;
-        width: 500pt;
-    }
+
 
     .countdowntext{
         font-size: 100pt;
@@ -84,40 +51,75 @@
         align-items: center;
         color: white;
     }
+    .raceinfocontainer{
+        margin: 70pt 20pt; 
+        height: fit-content; 
+        width: fit-content; 
+        right: 0; 
+        bottom: 0; 
+        position: absolute;
+    }
+    .infoelement{
+        padding: 0pt;
+        padding-left: 10pt;
+        background:  linear-gradient(90deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.7) 100%);
+        display: flex;
+        justify-content: space-between;
+        margin: 2.5pt 0;
+        padding-top: 1pt;
+        padding-bottom: 1pt;
+        height: 27pt;
+    }
+    .infovaltxt{
+        text-align: right;
+        font-size: 23pt;
+        margin: 0;
+        margin-right:13pt;
+        width: 126pt;
+    }
+    .infotxt{
+        font-size: 13pt;
+        margin: 1pt 5pt;
+        padding: 0;
+        margin-right: 0;
+        margin-left: auto;
+        margin-top: auto;
+        margin-bottom: 3pt;
+    }
 
 </style>
 <body>
-    <div  hidden  id="raceinfo" style="height: fit-content; width: fit-content; right: 0; bottom: 0; position: absolute; margin: 20pt 30pt;">
-        <div id="respawnprogressdiv"  style="display: none;" class="infoelement">
-            <h2 class="infotxt textinfo">RESPAWN</h2>
-            <div style="width: 80pt; height: 9pt;  margin: auto 5pt auto 20pt; background-color: #49171b;">
-                <div id="respawnprogress" style="background-color: #b42535; height: 100%; width: 0%;"></div>
+    <div class="raceinfocontainer" id="raceinfocontainer" style="display: none;">
+        
+        <div id="respawnprogressdiv" class="infoelement" style="display: none;">
+            <h2 class="chaletcomprime infotxt textinfo">Respawn</h2>
+            <div style="    display: flex; justify-content: center;  width: 126pt;">
+                <div style=" margin: 0 10pt; width: 90%; height: 12pt; margin: auto;  background-color: rgb(112, 25, 25);">
+                    <div id="respawnprogress" style="background-color: rgb(224, 50, 50); height: 100%; width: 0%;"></div>
+                </div>
             </div>
+
         </div>
+
+        <div class="infoelement">
+            <h2 class="chaletcomprime infotxt textinfo">Checkpoint</h2>
+            <h2 class="chaletcomprime infovaltxt textinfo" id="checkpoint">Caption</h2>
+        </div>
+        
+
+       
         <div id="Rockets" class="infoelement" style="display: none;">
-            <h2 class="infotxt textinfo">ROCKETS</h2>
-            <div style="width: 100pt; text-align: right;"><img src="https://docs.fivem.net/blips/radar_rockets.png"></div>
+            <h2 class="chaletcomprime infotxt textinfo">ROCKETS</h2>
+            <div style="width: 100pt; text-align: right;"><img height="35" src="https://docs.fivem.net/blips/radar_rockets.png"></div>
         </div>
         <div id="Boosters" class="infoelement" style="display: none;">
-            <h2 class="infotxt textinfo">BOOSTER</h2>
-            <div style="width: 100pt; text-align: right;"><img src="https://docs.fivem.net/blips/radar_boost.png"></div>
-            
+            <h2 class="chaletcomprime infotxt textinfo">BOOSTER</h2>
+            <div style="width: 100pt; text-align: right;"><img height="35" src="https://docs.fivem.net/blips/radar_boost.png"></div>
         </div>
-        <!-- <div class="infoelement">
-            <h2 class="infotxt textinfo">LAP</h2>
-            <h2 class="infoval textinfo" id="lap">1/6</h2>
-        </div> -->
+
         <div class="infoelement">
-            <h2 class="infotxt textinfo">CHECKPOINT</h2>
-            <h2 class="infoval textinfo" id="checkpoint">AB</h2>
-        </div>
-        <!-- <div class="infoelement">
-            <h2 class="infotxt textinfo">POSITION</h2>
-            <h2 class="infoval textinfo" id="position">AB</h2>
-        </div> -->
-        <div class="infoelement">
-            <h2 class="infotxt textinfo">TIME</h2>
-            <h2 class="infoval textinfo" id="time">03:49.47</h2>
+            <h2 class="chaletcomprime infotxt textinfo">TIME</h2>
+            <h2 class="chaletcomprime infovaltxt textinfo" id="time">03:49.47</h2>
         </div>
     </div>
 
@@ -136,19 +138,19 @@
         <h1 id="txtcountdown" class="countdowntext pricedown">2</h1>
     </div>
 
-    
+
 </body>
 
 <script>
 window.addEventListener('message', (event) => {
-    if (event.data.action === 'updateracetimer') 
+    if (event.data.action === 'updateracetimer')
         document.getElementById('time').innerHTML = event.data.time
-     else if(event.data.action === 'updatecheckpoint') 
+     else if(event.data.action === 'updatecheckpoint')
         document.getElementById('checkpoint').innerHTML = event.data.checkpoint
      else if (event.data.action === 'showraceinfoui')
-        document.getElementById('raceinfo').removeAttribute('hidden')
+        document.getElementById('raceinfocontainer').style.display = "block"
     else if (event.data.action === 'hideraceinfoui')
-        document.getElementById('raceinfo').hidden = true
+        document.getElementById('raceinfocontainer').style.display = "none"
     else if (event.data.action === 'showcountdownui')
         document.getElementById('divcountdown').hidden = false
     else if (event.data.action === 'hidecountdownui')

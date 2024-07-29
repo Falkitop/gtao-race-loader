@@ -184,7 +184,6 @@ end
 
 local function UnloadRace()
 	UnloadUGC()
-	CurrentCheckpointIndex = 20
 	RemoveBlip(NextCheckpointBlip)--Could be problematic if race is finished
 	DeleteCheckpoint(NextCheckpoint)--Could be problematic if race is finished
 end
@@ -199,6 +198,7 @@ end)
 
 RegisterNetEvent('loadrace')
 AddEventHandler('loadrace', function(ugc)
+	CurrentCheckpointIndex = 0
 	UnloadRace()
 	loadedUGC = ugc
 	SetTrack()

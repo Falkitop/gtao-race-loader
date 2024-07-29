@@ -142,8 +142,13 @@ function LoadNextCheckpoint()
 	local len = track.race.ChLength
 	local loc = track.race.ChLocs[CurrentCheckpointIndex+1]
 	local nextloc = track.race.ChLocs[CurrentCheckpointIndex+2]
+	print(track.race.ChScale == nil)
+	if(track.race.ChScale) then
 	NextCheckpointRadius = track.race.ChScale[CurrentCheckpointIndex+1]*10
-	pitch = track.race.ChPitch[CurrentCheckpointIndex+1]
+	else
+		NextCheckpointRadius = 10
+	end
+	--pitch = track.race.ChPitch[CurrentCheckpointIndex+1]
 
 	TriggerEvent("uiupdatecheckpointnum", CurrentCheckpointIndex, len)
 

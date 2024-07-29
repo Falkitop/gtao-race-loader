@@ -6004,7 +6004,7 @@ function MainView:Visible(visible)
             if not IsPauseMenuActive() then
                 self._focus = 1
                 PlaySoundFrontend(self.SoundId, "Hit_In", "PLAYER_SWITCH_CUSTOM_SOUNDSET", true)
-                ActivateFrontendMenu(`FE_MENU_VERSION_CORONA`, true, 0)
+                ActivateFrontendMenu("FE_MENU_VERSION_CORONA", true, 0)
                 self:BuildPauseMenu()
                 self.OnLobbyMenuOpen(self)
                 AnimpostfxPlay("PauseMenuIn", 800, true)
@@ -6026,7 +6026,7 @@ function MainView:Visible(visible)
             SetPlayerControl(PlayerId(), true, 0)
             if IsPauseMenuActive() then
                 PlaySoundFrontend(self.SoundId, "Hit_Out", "PLAYER_SWITCH_CUSTOM_SOUNDSET", true)
-                ActivateFrontendMenu(`FE_MENU_VERSION_CORONA`, false, 0)
+                ActivateFrontendMenu("FE_MENU_VERSION_CORONA", false, 0)
             end
             SetFrontendActive(false)
         end
@@ -8702,7 +8702,7 @@ function TabView:Visible(visible)
         if visible == true then
             if not IsPauseMenuActive() then
                 PlaySoundFrontend(self.SoundId, "Hit_In", "PLAYER_SWITCH_CUSTOM_SOUNDSET", true)
-                ActivateFrontendMenu(`FE_MENU_VERSION_CORONA`, true, 0)
+                ActivateFrontendMenu("FE_MENU_VERSION_CORONA", true, 0)
                 self.OnPauseMenuOpen(self)
                 AnimpostfxPlay("PauseMenuIn", 0, true)
                 self._firstDrawTick = true
@@ -8733,7 +8733,7 @@ function TabView:Visible(visible)
             SetPlayerControl(PlayerId(), true, 0)
             if IsPauseMenuActive() then
                 PlaySoundFrontend(self.SoundId, "Hit_Out", "PLAYER_SWITCH_CUSTOM_SOUNDSET", true)
-                ActivateFrontendMenu(`FE_MENU_VERSION_CORONA`, false, 0)
+                ActivateFrontendMenu("FE_MENU_VERSION_CORONA", false, 0)
             end
             SetFrontendActive(false)
         end
@@ -19102,8 +19102,8 @@ AddEventHandler("onResourceStop", function(resName)
         if MenuHandler:IsAnyMenuOpen() or MenuHandler:IsAnyPauseMenuOpen() then
             MenuHandler:CloseAndClearHistory()
         end
-        if IsPauseMenuActive() or GetCurrentFrontendMenuVersion() == `FE_MENU_VERSION_CORONA` then
-            ActivateFrontendMenu(`FE_MENU_VERSION_CORONA`, false, 0)
+        if IsPauseMenuActive() or GetCurrentFrontendMenuVersion() == "FE_MENU_VERSION_CORONA" then
+            ActivateFrontendMenu("FE_MENU_VERSION_CORONA", false, 0)
             AnimpostfxStop("PauseMenuIn");
             AnimpostfxPlay("PauseMenuOut", 800, false);
         end
@@ -19130,7 +19130,7 @@ Citizen.CreateThread(function()
 
     while true do
         if MenuHandler.ableToDraw and not (IsWarningMessageActive() or ScaleformUI.Scaleforms.Warning:IsShowing()) then
-            if GetCurrentFrontendMenuVersion() == `FE_MENU_VERSION_CORONA` then
+            if GetCurrentFrontendMenuVersion() == "FE_MENU_VERSION_CORONA" then
                 SetScriptGfxDrawBehindPausemenu(true)
                 BeginScaleformMovieMethodOnFrontend("INSTRUCTIONAL_BUTTONS");
                 ScaleformMovieMethodAddParamPlayerNameString("SET_DATA_SLOT_EMPTY");
