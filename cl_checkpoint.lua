@@ -2,7 +2,7 @@ CurrentCheckpointIndex = 0 --Starts at 0
 local NextCheckpoint = nil
 local NextCheckpointBlip = nil
 local NextTransformCheckpointMarker = nil
-local NextCheckpointRadius = 0
+local NextCheckpointRadius = 0.0 --Has to be a float
 CurrentCheckpointHead = nil
 CurrentCheckpointLoc = nil
 
@@ -12,21 +12,6 @@ CurrentCheckpointLoc = nil
 local CPr, CPg, CPb, CPa = 247, 198, 104, 100
 local cIR, cIG, cIB, cIA = 108, 183, 220, 220
 local CPTr, CPTg, CPTb, CPTa  = 226, 56, 72, 140
-
-local racetype = {
-	[0] = "Landrace",
-	[1] = "LandraceP2P",
-	[2] = "WaterRace",
-	[3] = "WaterRaceP2P",
-	[4] = "AirRace",
-	[5] = "AirRaceP2P",
-	[6] = "StuntRace / SpecialRace",
-	[7] = "StuntRaceP2P / TransformRace",
-	[12] = "BikeRace",
-	[13] = "BikeRaceP2P",
-	[24] = "OpenWheelRace",
-	[26] = "PursuitRace"
-}
 
 local function CreateRaceCheckpoint(loc, nextloc, finish)
 	--GroundType
@@ -41,6 +26,7 @@ local function CreateRaceCheckpoint(loc, nextloc, finish)
 
 
 	NextCheckpointBlip = AddBlipForCoord(loc)
+	
 
 	if(finish) then
 		NextCheckpoint = CreateCheckpoint(chtypefin, loc, nextloc, NextCheckpointRadius, CPr, CPg, CPb, CPa, 100, 100)
@@ -50,7 +36,7 @@ local function CreateRaceCheckpoint(loc, nextloc, finish)
 	end
 
 
-	
+
 	if(NextCheckpointRadius > 10) then
 		N_0xdb1ea9411c8911ec( --This native is used for the "larger" circular checkpoints, and sets the circle/ring around the checkpoint to point in the same direction as the inner arrow
 			NextCheckpoint
@@ -142,11 +128,10 @@ function LoadNextCheckpoint()
 	local len = track.race.ChLength
 	local loc = track.race.ChLocs[CurrentCheckpointIndex+1]
 	local nextloc = track.race.ChLocs[CurrentCheckpointIndex+2]
-	print(track.race.ChScale == nil)
 	if(track.race.ChScale) then
-	NextCheckpointRadius = track.race.ChScale[CurrentCheckpointIndex+1]*10
+	NextCheckpointRadius = track.race.ChScale[CurrentCheckpointIndex+1]*10.0
 	else
-		NextCheckpointRadius = 10
+		NextCheckpointRadius = 10.0
 	end
 	--pitch = track.race.ChPitch[CurrentCheckpointIndex+1]
 
@@ -195,6 +180,7 @@ end
 function SetMarker(Type, pos, dir, scale, r, g, b, a)
 	NextTransformCheckpointMarker = {Type, pos, dir, dir, scale, r, g, b, a}
 end
+
 --Markerloop (stupid)
 Citizen.CreateThread(function()
 	while true do
@@ -236,15 +222,6 @@ local function DrawText3D(loc, text) -- some useful function, use it if you want
         EndTextCommandDisplayText(_x,_y)
     end
 end
-
-
---ScriptRaceInit(10, 1, 1, GetPlayerPed(-1))
-
---RaceGalleryAddBlip(GetEntityCoords(GetPlayerPed(-1)))
---SetRaceTrackRender(true)
---RaceGalleryFullscreen(false)
---ActivateFrontendMenu("FE_MENU_VERSION_CORONA_RACE", true, 41)
-
 
 --Entered Checkpoint
 Citizen.CreateThread(function()

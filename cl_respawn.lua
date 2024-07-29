@@ -16,6 +16,9 @@ local function RespawnVehicleOrPlayerToLastCheckpoint()
         SetEntityHeading(CurrentVehicle, head)
     
         SetVehicleEngineOn(CurrentVehicle, true, true, false)
+        ClearPedTasks(GetPlayerPed(-1))
+        ClearPedTasksImmediately(GetPlayerPed(-1))
+        ClearPedSecondaryTask(GetPlayerPed(-1))
         TaskWarpPedIntoVehicle(GetPlayerPed(-1), CurrentVehicle, -1)
         SetGameplayCamRelativeHeading(0)
     end
@@ -25,10 +28,13 @@ end
 Citizen.CreateThread(function()
 	while true do
 
-        if (true) then
-            if(IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
-                CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
-            end
+        if(IsPedInAnyVehicle(GetPlayerPed(-1), false)) then
+            CurrentVehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
+            SetVehicleNeedsToBeHotwired(CurrentVehicle, false)
+            SetVehicleHasBeenOwnedByPlayer(CurrentVehicle, true)
+            SetVehicleIsWanted(CurrentVehicle, false)
+            SetVehicleIsStolen(CurrentVehicle, false)
+            SetEntityAsMissionEntity(CurrentVehicle, true, true)
         end
         --print(GetDisplayNameFromVehicleModel(GetEntityModel(CurrentVehicle)))
         Citizen.Wait(500)
@@ -40,7 +46,7 @@ RegisterNetEvent('playerSpawned')
 AddEventHandler('playerSpawned', function(spawnInfo)
     if not(IsInRace)then return end
     Wait(10) -- Has to be done otherwise the code is stuck at creating vehicle
-    RespawnVehicleAtLastCheckpoint()
+    RespawnVehicleOrPlayerToLastCheckpoint()
     --TriggerServerEvent("respawnvehicleatcoords", GetPlayerPed(-1), 1 , 1)
 end)
 
@@ -69,7 +75,7 @@ Citizen.CreateThread(function()
                 print("PlayerPed: "..tostring(PlayerPed))
                 print("CurrentVehicle: "..tostring(CurrentVehicle))
 				if (RespawnDelta < 1 and Respawning == false) then
-					TaskLeaveVehicle(PlayerPed, GetVehiclePedIsIn(PlayerPed))
+					TaskLeaveVehicle(PlayerPed, GetVehiclePedIsIn(PlayerPed), 4160 )
 				end
 				RespawnDelta = 0
                 Respawning = false
