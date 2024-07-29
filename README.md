@@ -17,10 +17,6 @@ use it by '/race [id]'
 or a random race with '/race rand'
 to stop the current race do '/race stop'
 
-# Fully Supports
-- LandRace
-- Normal AirRace
-
 # List of all possible racetypes with corresponding gameids
 ```
 	[0] = "Landrace",
