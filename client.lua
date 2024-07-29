@@ -184,7 +184,7 @@ end
 
 local function UnloadRace()
 	UnloadUGC()
-	CurrentCheckpointIndex = 0
+	CurrentCheckpointIndex = 20
 	RemoveBlip(NextCheckpointBlip)--Could be problematic if race is finished
 	DeleteCheckpoint(NextCheckpoint)--Could be problematic if race is finished
 end
@@ -201,9 +201,11 @@ RegisterNetEvent('loadrace')
 AddEventHandler('loadrace', function(ugc)
 	UnloadRace()
 	loadedUGC = ugc
+	SetTrack()
 	LoadUGC()
 	LoadUtils()
 	LoadNextCheckpoint()
+
 	
 	--Set Player Location
 	loc = loadedUGC['mission']['veh']['loc'][GetPlayerServerId(PlayerId())]-- I HAVENT TESTED IF the id works for others

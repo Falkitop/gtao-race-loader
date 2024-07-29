@@ -1,3 +1,9 @@
+
+
+
+SetEnableVehicleSlipstreaming(true)
+
+
 --Stop All Traffic
 Citizen.CreateThread(function()
 	while true 

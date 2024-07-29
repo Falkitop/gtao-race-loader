@@ -16,6 +16,7 @@ client_scripts {
 	"cl_gui.lua",
 	"cl_respawn.lua",
 	"cl_focuscam.lua",
+	"cl_trackmanager.lua",
 	"ScaleformUI.lua",
 }
 
