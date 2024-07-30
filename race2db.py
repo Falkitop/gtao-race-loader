@@ -121,8 +121,8 @@ def GetRaceIdsAndSaveDetailsToDB(startindex, searchterms):
             AddRaceDetailsToDB(Ids)
 
 def GetRaceData(id):
-    connect_timeout = 1000
-    read_timeout = 1000
+    connect_timeout = 10000
+    read_timeout = 10000
     for i in range(3):#3
         for j in range(500):#500
             for lang in ["en", "ja", "zh", "zh-cn", "fr", "de", "it", "ru", "pt", "pl", "ko", "es", "es-mx"]:

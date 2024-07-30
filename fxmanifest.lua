@@ -4,7 +4,10 @@ game 'gta5'
 ui_page 'raceinfo.html'
 
 files{
-	'raceinfo.html',
+	'ChaletComprime-MilanSixty.ttf',
+	'ChaletLondonNineteenSixtyRegular.otf',
+	'vehicleselection.html',
+	'index.html',
 }
 
 client_scripts {

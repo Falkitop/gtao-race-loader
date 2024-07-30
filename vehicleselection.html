@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+
+    @font-face {
+            font-family: "Chalet";
+            src: url(ChaletLondonNineteenSixtyRegular.otf) format("truetype");
+    }
+    @font-face {
+            font-family: "ChaletComprime";
+            src: url(ChaletComprime-MilanSixty.ttf) format("truetype");
+    }
+
+
+    h1{
+        font-family: "ChaletComprime", sans-serif;
+        margin: 0;
+        font-size: 40pt;
+        color: white;
+        /* text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;  */
+    }
+    h4.chalet{
+        font-family: "Chalet", sans-serif;
+        color: rgb(255, 255, 255);
+    }
+
+    .dropshadow{
+        text-shadow: 1pt 1pt 3pt black;
+    }
+
+    .rootframe{
+        width: 1298px;
+        height: 523px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 112px;
+        
+    }
+    .contentframe{
+        display: flex;
+    }
+    .block{
+        height: 38px;
+        margin: 0;
+        margin-bottom: 2pt;
+        display: flex;
+        align-items: center;
+        padding-left: 8pt;
+        padding-right: 8pt;
+    }
+
+    .textleft{
+        margin-right: auto;
+        margin-left: 0;
+    }
+
+    .textmiddle{
+        /* justify-content: center; */
+        margin: auto;
+    }
+
+    .textright{
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    .blue.unselected{
+        background-color: #12355D;
+    }
+
+    .blue.selected{
+        background-color: #2462a9;
+    }
+
+    .black.unselected{
+        background-color: rgba(0, 0, 0, 0.754);
+    }
+    .black.selected{
+        background-color: white;
+    }
+    .leftpanel{
+        width: 433px;
+        margin-right: 2pt;
+
+    }
+</style>
+<body>
+    <div id="rootframe" class="rootframe">
+        <h1 class="dropshadow">TITLE</h1>
+        <h4 class="chalet dropshadow">DESCRITPION</h4>
+        <div class="contentframe">
+            <div class="leftpanel">
+                <div class="block blue unselected">
+                    <h4 class="chalet textleft"></h4>
+                </div>
+                <div class="block black unselected">
+                    <h4 class="chalet textleft">Vehicle</h4>
+                    <h4 class="chalet textright">˂ Ready ˃</h4>
+                </div>
+                <div class="block blue unselected ">
+                    <h4 class="chalet">Ready</h4>
+                </div>
+            </div>
+            <div class=" block blue unselected" style="flex-grow: 1;">
+                <h4 class="chalet textmiddle">Map</h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
