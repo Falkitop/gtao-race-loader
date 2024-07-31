@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<script>
+    parent.vehicleselection = this.document;
+</script>
 <style>
-
     @font-face {
             font-family: "Chalet";
             src: url(ChaletLondonNineteenSixtyRegular.otf) format("truetype");
@@ -15,12 +17,14 @@
             src: url(ChaletComprime-MilanSixty.ttf) format("truetype");
     }
 
-
+    .w{
+        color: white;
+    }
+    
     h1{
         font-family: "ChaletComprime", sans-serif;
         margin: 0;
         font-size: 40pt;
-        color: white;
         /* text-shadow:
             -1px -1px 0 #000,
             1px -1px 0 #000,
@@ -29,7 +33,7 @@
     }
     h4.chalet{
         font-family: "Chalet", sans-serif;
-        color: rgb(255, 255, 255);
+        /* font-size: 15pt; */
     }
 
     .dropshadow{
@@ -55,6 +59,7 @@
         align-items: center;
         padding-left: 8pt;
         padding-right: 8pt;
+        color: white;
     }
 
     .textleft{
@@ -73,7 +78,7 @@
     }
 
     .blue.unselected{
-        background-color: #12355D;
+        background-color: #12355d;
     }
 
     .blue.selected{
@@ -82,9 +87,11 @@
 
     .black.unselected{
         background-color: rgba(0, 0, 0, 0.754);
+        color: white;
     }
     .black.selected{
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.754);;
+        color: black;
     }
     .leftpanel{
         width: 433px;
@@ -94,19 +101,21 @@
 </style>
 <body>
     <div id="rootframe" class="rootframe">
-        <h1 class="dropshadow">TITLE</h1>
-        <h4 class="chalet dropshadow">DESCRITPION</h4>
+        <h1 class="dropshadow w">TITLE</h1>
+        <h4 class="chalet dropshadow w">DESCRITPION</h4>
         <div class="contentframe">
             <div class="leftpanel">
                 <div class="block blue unselected">
                     <h4 class="chalet textleft"></h4>
                 </div>
-                <div class="block black unselected">
-                    <h4 class="chalet textleft">Vehicle</h4>
-                    <h4 class="chalet textright">˂ Ready ˃</h4>
-                </div>
-                <div class="block blue unselected ">
-                    <h4 class="chalet">Ready</h4>
+                <div id="interactables">
+                    <div class="block black unselected">
+                        <h4 class="chalet textleft">Vehicle</h4>
+                        <h4 class="chalet textright">˂ VEHICLECLASS ˃</h4>
+                    </div>
+                    <div class="block blue unselected ">
+                        <h4  id="Ready"  class="chalet">Ready</h4>
+                    </div>
                 </div>
             </div>
             <div class=" block blue unselected" style="flex-grow: 1;">
@@ -115,4 +124,5 @@
         </div>
     </div>
 </body>
+
 </html>

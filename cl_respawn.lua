@@ -101,8 +101,8 @@ end)
 
 
 --[[    VEHICLE SPAWNER    ]]
-local function GetVehicles()
-    local classes = loadedUGC['meta']['vehcl']
+local function GetVehicles(veh) --
+    local classes = veh
     local vehicles = {}
     for iclass=1,#classes do
         for k, v in pairs(VehicleClasses) do
@@ -119,7 +119,7 @@ local function GetVehicles()
 end
 
 function SpawnPlayerWithRandomVehicle(loc, head)
-    local vehicles = GetVehicles()
+    local vehicles = GetVehicles(loadedUGC['meta']['vehcl'])
     local vehicle = vehicles[ math.random( #vehicles ) ]
 
     local modelHash = GetHashKey(vehicle)

@@ -121,13 +121,16 @@ def GetRaceIdsAndSaveDetailsToDB(startindex, searchterms):
             AddRaceDetailsToDB(Ids)
 
 def GetRaceData(id):
+    time.sleep(10)
     connect_timeout = 10000
     read_timeout = 10000
-    for i in range(3):#3
-        for j in range(500):#500
+
+    session = requests.Session()
+    for i in range(1):#3
+        for j in range(10):#500
             for lang in ["en", "ja", "zh", "zh-cn", "fr", "de", "it", "ru", "pt", "pl", "ko", "es", "es-mx"]:
                 url = f"https://prod.cloud.rockstargames.com/ugc/gta5mission/{id}/{i}_{j}_{lang}.json"
-                #time.sleep(0.5)
+                
                 response =  requests.request("GET", url, timeout=(connect_timeout, read_timeout))
                 print("Trying " + url)
                 if response.status_code == 200:
@@ -171,7 +174,6 @@ def GetRaceDataAndSaveToDB():
 #GetRaceIdsAndSaveDetailsToDB(0, ["impossible"])
 #GetRaceData("uA1AObjYf0-rnMHnMHq04g")
 GetRaceDataAndSaveToDB()
-
 
 
 

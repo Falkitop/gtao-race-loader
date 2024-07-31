@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-ui_page 'raceinfo.html'
+ui_page 'index.html'
 
 files{
 	'ChaletComprime-MilanSixty.ttf',
@@ -11,17 +11,20 @@ files{
 }
 
 client_scripts {
+	"@ScaleformUI_Lua/ScaleformUI.lua",
 	"vehicledata.lua",
-	"@ScaleformUI/ScaleformUI.lua",
 	"MissionJSON.lua",
 	"client.lua",
 	"cl_world.lua",
 	"cl_checkpoint.lua",
 	"cl_weapons.lua",
-	"cl_gui.lua",
+	"cl_gui_raceinfo.lua",
+	"cl_gui_vehicleselection.lua",
 	"cl_respawn.lua",
 	"cl_focuscam.lua",
 	"cl_trackmanager.lua",
+	"cl_commands.lua",
+
 }
 
 
@@ -30,7 +33,6 @@ server_scripts {
 	"server.lua",
 	"sv_command.lua",
 	"sv_weapons.lua",
-	"sv_racemanager.lua",
 } 
 
 author 'Falkitop'

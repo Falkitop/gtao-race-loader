@@ -88,7 +88,10 @@
     }
 
 </style>
-<body>
+<body style="margin: 0;">
+
+    <embed id="vehicleselectionelement" src="vehicleselection.html" style="display: none; margin: 0; height: 99vh; width: 100%;">
+        
     <div class="raceinfocontainer" id="raceinfocontainer" style="display: none;">
         
         <div id="respawnprogressdiv" class="infoelement" style="display: none;">
@@ -108,7 +111,7 @@
         
 
        
-        <div id="Rockets" class="infoelement" style="display: none;">
+        <div id="Rockets" class="infoelement" style="display: none;">*
             <h2 class="chalet infotxt textinfo">ROCKETS</h2>
             <div style="width: 100pt; text-align: right;"><img height="35" src="https://docs.fivem.net/blips/radar_rockets.png"></div>
         </div>
@@ -145,9 +148,9 @@
 window.addEventListener('message', (event) => {
     if (event.data.action === 'updateracetimer')
         document.getElementById('time').innerHTML = event.data.time
-     else if(event.data.action === 'updatecheckpoint')
+    else if(event.data.action === 'updatecheckpoint')
         document.getElementById('checkpoint').innerHTML = event.data.checkpoint
-     else if (event.data.action === 'showraceinfoui')
+    else if (event.data.action === 'showraceinfoui')
         document.getElementById('raceinfocontainer').style.display = "block"
     else if (event.data.action === 'hideraceinfoui')
         document.getElementById('raceinfocontainer').style.display = "none"
@@ -187,5 +190,82 @@ window.addEventListener('message', (event) => {
         document.getElementById('raceinfo.played').innerHTML = "Played: "+event.data.played
         document.getElementById('raceinfo.vehicletype').innerHTML = "Vehicles: "+event.data.vehicletype
 });
+</script>
+<script>
+    let Ready = false
+    let HorizontalIndex = 0
+    let VehicleIndex = 0
+    let UIElementsHardcodedNumber = 2
+    let Vehicles = "adder"
+    let NumVehicle
+    
+    window.addEventListener('message', (event) => {
+
+        if(event.data.action === 'Show')
+        {
+            Vehicle = event.data.vehicles
+            NumVehicle = event.data.numveh
+            document.getElementById("vehicleselectionelement").style.display = "block"
+            //RefreshUIElements()
+        }
+        else if (event.data.action === 'Up')
+            Up()
+        else if(event.data.action === 'Down')
+            Down()
+        else if(event.data.action === 'Left')
+            DecreaseIndex()
+        else if(event.data.action === 'Right')
+            IncreaseIndex()
+        else if(event.data.action === 'Select')
+            ToggleReadyState()
+    });
+
+
+    function Up()
+    {
+        HorizontalIndex = Math.abs((HorizontalIndex - 1) % UIElementsHardcodedNumber)
+        //RefreshUIElements()
+    }
+
+    function Down()
+    {
+        HorizontalIndex = (HorizontalIndex + 1) % UIElementsHardcodedNumber
+        RefreshUIElements()
+    }
+
+
+
+    function DecreaseVehicleIndex()
+    {
+        VehicleIndex = Math.max(0, Math.min(VehicleIndex-1, NumVehicle-1));
+        RefreshUIElements()
+    }
+
+    function IncreaseIndex()
+    {
+        VehicleIndex = Math.max(0, Math.min(VehicleIndex+1, NumVehicle-1));
+        RefreshUIElements()
+    }
+
+
+    function ToggleReadyState()
+    {
+        Ready = !Ready
+        RefreshUIElements()
+        
+    }
+
+    function RefreshUIElements()
+    {
+        vehicleselection.getElementById("Ready").innerHTML = Ready ? "Ready" : "Not Ready"
+        
+        Array.from(vehicleselection.getElementById("interactables").children).forEach(element => {
+
+            element.classList.remove("selected")
+            element.classList.add("unselected")
+        });
+        vehicleselection.getElementById("interactables").children[HorizontalIndex].classList.add("selected")
+        
+    }
 </script>
 </html>
