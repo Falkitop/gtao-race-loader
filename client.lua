@@ -192,6 +192,7 @@ end
 RegisterNetEvent('stoprace')
 AddEventHandler('stoprace', function()
 	UnloadRace()
+	UpdateWeapon(nil)
 	HideRaceInfoUI()
 	IsInRace = false
 end)

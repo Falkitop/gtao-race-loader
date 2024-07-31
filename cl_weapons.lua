@@ -1,7 +1,7 @@
 local CurrentWeapon = nil
 local UtilObjs = nil
 
-local function UpdateWeapon(newWeapon)
+function UpdateWeapon(newWeapon)
     
     CurrentWeapon = newWeapon
 
