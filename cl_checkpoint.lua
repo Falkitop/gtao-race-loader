@@ -128,6 +128,10 @@ function LoadNextCheckpoint()
 	local len = track.race.ChLength
 	local loc = track.race.ChLocs[CurrentCheckpointIndex+1]
 	local nextloc = track.race.ChLocs[CurrentCheckpointIndex+2]
+
+	if(CurrentCheckpointIndex > len) then
+		return
+	end
 	if(track.race.ChScale) then
 	NextCheckpointRadius = track.race.ChScale[CurrentCheckpointIndex+1]*10.0
 	else
