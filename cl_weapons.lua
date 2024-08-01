@@ -34,10 +34,10 @@ end
 function LoadUtils()
     UtilObjs = {}
 
-    local locs = loadedUGC['mission']['weap']['loc']
-    local heads = loadedUGC['mission']['weap']['head']
-    local sub = loadedUGC['mission']['weap']['sub']
-    local amount = loadedUGC['mission']['weap']['no']
+    local locs = track.weapon.locs
+    local heads = track.weapon.heads
+    local sub = track.weapon.sub
+    local amount = track.weapon.amount
 
     for i=1,amount do
         if(sub[i] == 0) then

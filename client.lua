@@ -210,8 +210,10 @@ AddEventHandler('loadrace', function(ugc)
 
 	
 	--Set Player Location
-	loc = loadedUGC['mission']['veh']['loc'][GetPlayerServerId(PlayerId())]-- I HAVENT TESTED IF the id works for others
-	head = loadedUGC['mission']['veh']['head'][GetPlayerServerId(PlayerId())]
+	loc = track.vehicle.VehicleLocs[GetPlayerServerId(PlayerId())]-- I HAVENT TESTED IF the id works for others
+	--TODO
+	-- If there are more players than start locs... nil
+	head = track.vehicle.VehicleHeads[GetPlayerServerId(PlayerId())]
 	print("Player start at "..loc)
 	CurrentCheckpointHead = head
 	CurrentCheckpointLoc = loc

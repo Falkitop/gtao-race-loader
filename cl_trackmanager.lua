@@ -1,7 +1,13 @@
 function SetTrack()
     local race = loadedUGC['mission']['race']
     local rule = loadedUGC['mission']['rule']
+    local weapon = loadedUGC['mission']['weap']
+    local meta = loadedUGC['meta']
+    local vehicle = loadedUGC['mission']['veh']
     track = {
+        meta = {
+            VehicleClasses = meta['vehcl']
+        },
         race = {
             ChLength = race['chp'],
             ChLocs = race['chl'],
@@ -25,6 +31,8 @@ function SetTrack()
             ChTransformIndex = race['cptfrm'],
             VehicleTransformModels = race['trfmvm'],
 
+            ChTeleport = race['cpbs1'],
+
         },
         rule = {
             RoundTime = rule['time'],
@@ -38,6 +46,16 @@ function SetTrack()
             Police = rule['pol'],
             VehicleDensity = rule['vehd'],
             EndCutsceneWeather = rule['wethec'],
+        },
+        vehicle = {
+            VehicleLocs = vehicle['loc'],
+            VehicleHeads = vehicle['head']
+        },
+        weapon = {
+            locs = weapon['loc'],
+            heads = weapon['head'],
+            sub = weapon['sub'],
+            amount = weapon['no']
         }
     }
 end

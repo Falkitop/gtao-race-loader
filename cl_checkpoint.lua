@@ -104,16 +104,16 @@ local function CreateTeleportCheckpoint(loc, nextloc)
 end
 
 local function IsTransformCheckpoint(index)
-	if(loadedUGC['mission']['race']["cptfrm"] == nil) then return false end
-	return loadedUGC['mission']['race']["cptfrm"][index] > 0
+	if(track.race.ChTransformIndex == nil) then return false end
+	return track.race.ChTransformIndex[index] > 0 --loadedUGC['mission']['race']["cptfrm"]
 	--0 is the vehicle that you have at the beginning
 	--Change this to -1 when it can change back to beginning vehicle
 end
 
 local function IsTeleportCheckpoint(index)
 
-	if(loadedUGC['mission']['race']["cpbs1"] == nil) then return false end
-	return loadedUGC['mission']['race']["cpbs1"][index] == 134217731
+	if(track.race.ChTeleport == nil) then return false end
+	return track.race.ChTeleport[index] == 134217731
 	--[[
 	Why is 1 a null value for a json string???
 	THIS IS ALL JUST A MAYBE
@@ -260,19 +260,19 @@ Citizen.CreateThread(function()
 
 
 
-			if GetDistanceBetweenCoords(loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId(-1)), true) <= (NextCheckpointRadius) then -- Entered checkpoint
+			if GetDistanceBetweenCoords(track.race.ChLocs[CurrentCheckpointIndex+1], GetEntityCoords(PlayerPedId(-1)), true) <= (NextCheckpointRadius) then -- Entered checkpoint
 
 
 				--Teleport
 				if(IsTeleportCheckpoint(CurrentCheckpointIndex+1)) then
-					SetPedCoordsKeepVehicle(GetPlayerPed(-1), loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex+2])
+					SetPedCoordsKeepVehicle(GetPlayerPed(-1), track.race.ChLocs[CurrentCheckpointIndex+2])
 				end
 
 				--Transform
 				if(IsTransformCheckpoint(CurrentCheckpointIndex+1)) then
-					local TransformCheckpointHashIndex = loadedUGC['mission']['race']["cptfrm"][CurrentCheckpointIndex+1]
+					local TransformCheckpointHashIndex = track.race.ChTransformIndex[CurrentCheckpointIndex+1]
 					print("TransformCheckpointHashIndex is: "..TransformCheckpointHashIndex)
-					local TransformVehicleHash = loadedUGC['mission']['race']["trfmvm"][TransformCheckpointHashIndex+1] --+1 because lua index starts at 1
+					local TransformVehicleHash = track.race.VehicleTransformModels[TransformCheckpointHashIndex+1] --+1 because lua index starts at 1
 
 					--[[
 						if transforming to foot, the hash for the vehicle is a d1ldo...
@@ -298,7 +298,7 @@ Citizen.CreateThread(function()
 				::SkipTransform::
 
                 --Use diffferent sound for finish goal
-				if(#loadedUGC['mission']['race']["chl"] == CurrentCheckpointIndex+1) then
+				if(#track.race.ChLocs == CurrentCheckpointIndex+1) then
 					PlaySoundFrontend(-1, "Finish_Win", "DLC_AW_Frontend_Sounds")
 					TriggerServerEvent("playerenteredfinish", GetPlayerServerId())
 					print("Finished Race")
@@ -309,8 +309,8 @@ Citizen.CreateThread(function()
 
 
 				CurrentCheckpointIndex = CurrentCheckpointIndex + 1
-                CurrentCheckpointHead = loadedUGC['mission']['race']["chh"][CurrentCheckpointIndex]
-                CurrentCheckpointLoc = loadedUGC['mission']['race']["chl"][CurrentCheckpointIndex]
+                CurrentCheckpointHead = track.race.ChHeads[CurrentCheckpointIndex]
+                CurrentCheckpointLoc = track.race.ChLocs[CurrentCheckpointIndex]
 
 
 				LoadNextCheckpoint()

@@ -119,7 +119,7 @@ local function GetVehicles(veh) --
 end
 
 function SpawnPlayerWithRandomVehicle(loc, head)
-    local vehicles = GetVehicles(loadedUGC['meta']['vehcl'])
+    local vehicles = GetVehicles(track.meta.VehicleClasses)
     local vehicle = vehicles[ math.random( #vehicles ) ]
 
     local modelHash = GetHashKey(vehicle)
