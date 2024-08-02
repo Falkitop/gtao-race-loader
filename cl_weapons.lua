@@ -94,7 +94,7 @@ local function CreateWeapon(hash, blipid, loc, head)
 
 end
 
-local function PickedUpRepairKit()*
+local function PickedUpRepairKit()
     SetVehicleEngineHealth(CurrentVehicle, 100.0)
     SetVehicleDeformationFixed(CurrentVehicle)
     SetVehicleBodyHealth(CurrentVehicle, 1000.0)
