@@ -29,4 +29,8 @@ Citizen.CreateThread(function()
 end)
 
 
+function SetWorldParameters()
+	
+end
+
 

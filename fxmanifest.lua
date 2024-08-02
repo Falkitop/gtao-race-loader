@@ -6,7 +6,6 @@ ui_page 'index.html'
 files{
 	'ChaletComprime-MilanSixty.ttf',
 	'ChaletLondonNineteenSixtyRegular.otf',
-	'vehicleselection.html',
 	'index.html',
 }
 

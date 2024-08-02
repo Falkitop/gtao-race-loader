@@ -205,9 +205,9 @@ Citizen.CreateThread(function()
 	end
 end)
 
-local function DrawText3D(loc, text) -- some useful function, use it if you want!
-    local onScreen,_x,_y= GetScreenCoordFromWorldCoord(loc.x, loc.y, loc.z)
-
+function DrawText3D(coords, text, scale) -- some useful function, use it if you want!
+    local onScreen,_x,_y= GetScreenCoordFromWorldCoord(coords.x, coords.y, coords.z)
+	scale = scale or 0.55
     if onScreen then
 		BeginTextCommandDisplayText("STRING")
 

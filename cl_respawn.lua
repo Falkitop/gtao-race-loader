@@ -12,20 +12,37 @@ function SetPlayerIntoVehicle(vehicle)
 end
 
 local function RespawnVehicleOrPlayerToLastCheckpoint()
-    local coords = CurrentCheckpointLoc
-    local head = CurrentCheckpointHead
 
-    if(CurrentVehicle == nil) then --Probably on foot
-        SetEntityCoords(GetPlayerPed(-1), coords)
-        SetEntityHeading(GetPlayerPed(-1), head)
-    else
-        SetVehicleFixed(CurrentVehicle)
-        StopEntityFire(CurrentVehicle)
-        SetEntityCoords(CurrentVehicle, coords)
-        SetEntityHeading(CurrentVehicle, head)
-        SetPlayerIntoVehicle(CurrentVehicle)
 
-    end
+
+    Citizen.CreateThread(function()
+        local coords = CurrentCheckpointLoc
+        local head = CurrentCheckpointHead
+        if(CurrentVehicle == nil) then --Probably on foot
+            SetEntityCoords(GetPlayerPed(-1), coords)
+            SetEntityHeading(GetPlayerPed(-1), head)
+        elseif(DoesEntityExist(CurrentVehicle)) then --If the wreck exists I just repair it
+            SetVehicleFixed(CurrentVehicle)
+            StopEntityFire(CurrentVehicle)
+            SetEntityCoords(CurrentVehicle, coords)
+            SetEntityHeading(CurrentVehicle, head)
+            
+            SetPlayerIntoVehicle(CurrentVehicle)
+            Citizen.Wait(100)
+            if not(GetIsVehicleEngineRunning(CurrentVehicle)) then
+                SetVehicleEngineOn(CurrentVehicle, true, true, false)
+            end
+        else --Despawned?
+            print("VEHICLE HAS DESPAWNED")
+        end
+        
+        --Boost Aircraft
+        if(GetVehicleClass(CurrentVehicle) == 16) then
+            SetEntityVelocity(CurrentVehicle, GetEntityForwardVector(CurrentVehicle)*50)
+        end
+
+
+    end)
 end
 
 --Check for new Vehicle
@@ -165,20 +182,17 @@ local function ShowVehicleSelectionMenu(VehicleList)
         SpawnPlayerWithVehicle(VehicleList[newindex])
     end
 
-    -- local readyItem = UIMenuItem.New("Not Ready", "", SColor.FromHudColor(11), SColor.FromHudColor(9), SColor.FromHudColor(0))
-    -- menu:AddItem(readyItem)
+    local readyItem = UIMenuItem.New("Not Ready", "", SColor.FromHudColor(11), SColor.FromHudColor(9), SColor.FromHudColor(0))
+    menu:AddItem(readyItem)
 
-    -- menu.OnItemSelect = function(menu, item, index)
-    --     if(item == readyItem) then
-    --         Ready = not Ready
-    --         if(Ready) then
-    --             item:Label("Ready")
-    --         else
-    --             item:Label("Not Ready")
-    --         end
-    --     end
-    -- end
-
+    readyItem.Activated = function(menu)
+            Ready = not Ready
+            if(Ready) then
+                readyItem:Label("Ready")
+            else
+                readyItem:Label("Not Ready")
+            end
+       end
 
     menu:Visible(true)    
 end

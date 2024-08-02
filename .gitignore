@@ -7,3 +7,4 @@ URLHandler.lua
 *.json
 *.sch
 ScaleformUI.lua
+*.js

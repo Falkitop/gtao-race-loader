@@ -6,7 +6,10 @@ function SetTrack()
     local vehicle = loadedUGC['mission']['veh']
     track = {
         meta = {
-            VehicleClasses = meta['vehcl']
+            VehicleClasses = meta['vehcl'],
+            Weapons = meta['wp'],
+            WeaponClasses = meta['wpcl'],
+           
         },
         race = {
             ChLength = race['chp'],
@@ -52,10 +55,11 @@ function SetTrack()
             VehicleHeads = vehicle['head']
         },
         weapon = {
-            locs = weapon['loc'],
-            heads = weapon['head'],
-            sub = weapon['sub'],
-            amount = weapon['no']
+            Locs = weapon['loc'],
+            Heads = weapon['head'],
+            WeaponsDicti = weapon['sub'],
+            Amount = weapon['no'],
+            Type = weapon['type']
         }
     }
 end
