@@ -100,15 +100,14 @@ Citizen.CreateThread(function()
 end)
 
 
+
 --[[    VEHICLE SPAWNER    ]]
 local function GetVehicles(veh) --
     local classes = veh
     local vehicles = {}
     for iclass=1,#classes do
         for k, v in pairs(VehicleClasses) do
-          
             if(classes[iclass] == k) then
-
                 for ivehicle=1,#v do 
                     table.insert(vehicles, v[ivehicle])
                 end
@@ -118,11 +117,10 @@ local function GetVehicles(veh) --
     return vehicles
 end
 
-function SpawnPlayerWithRandomVehicle(loc, head)
-    local vehicles = GetVehicles(track.meta.VehicleClasses)
-    local vehicle = vehicles[ math.random( #vehicles ) ]
-
-    local modelHash = GetHashKey(vehicle)
+local function SpawnPlayerWithVehicle(veh)
+    local loc = track.vehicle.VehicleLocs[GetPlayerServerId(PlayerId())]
+    local head = track.vehicle.VehicleHeads[GetPlayerServerId(PlayerId())]
+    local modelHash = GetHashKey(veh)
     RequestModel(modelHash)
     while not HasModelLoaded(modelHash) do
       Wait(0)
@@ -143,5 +141,52 @@ function SpawnPlayerWithRandomVehicle(loc, head)
     StartVehicleHash = modelHash
 
 end
---[[    VEHICLE SPAWNER    ]]
 
+local function ShowVehicleSelectionMenu(VehicleList)
+    local VehicleList = GetVehicles(VehicleList)
+    local labeledVehicles = {}
+
+    for i=1,#VehicleList do
+        local name = ""
+        if (GetLabelText(VehicleList[i]) == "NULL") then
+            name = string.lower(VehicleList[i]):gsub("^%l", string.upper)
+        else
+            name = GetLabelText(VehicleList[i])
+        end
+        table.insert(labeledVehicles, name)
+    end
+
+    local menu = UIMenu.New("", "", 50, 50, false, "", "", true)
+    menu:AnimationEnabled(false)
+
+    local vehicleSelectionItem = UIMenuListItem.New("Vehicle", labeledVehicles, 0, "")
+    menu:AddItem(vehicleSelectionItem)
+    menu.OnListChange = function(menu, item, newindex)
+        SpawnPlayerWithVehicle(VehicleList[newindex])
+    end
+
+    -- local readyItem = UIMenuItem.New("Not Ready", "", SColor.FromHudColor(11), SColor.FromHudColor(9), SColor.FromHudColor(0))
+    -- menu:AddItem(readyItem)
+
+    -- menu.OnItemSelect = function(menu, item, index)
+    --     if(item == readyItem) then
+    --         Ready = not Ready
+    --         if(Ready) then
+    --             item:Label("Ready")
+    --         else
+    --             item:Label("Not Ready")
+    --         end
+    --     end
+    -- end
+
+
+    menu:Visible(true)    
+end
+
+VehicleManager = {
+    VehicleIndex = 1,
+    Ready = false,
+    SpawnPlayerWithRandomVehicle = SpawnPlayerWithRandomVehicle,
+    ShowVehicleSelectionMenu = ShowVehicleSelectionMenu
+}
+--[[    VEHICLE SPAWNER    ]]

@@ -219,7 +219,7 @@ AddEventHandler('loadrace', function(ugc)
 	CurrentCheckpointLoc = loc
 	SetPedCoordsKeepVehicle(GetPlayerPed(-1), loc)
 	SetEntityHeading(GetVehiclePedIsIn(GetPlayerPed(-1)), head)
-	SpawnPlayerWithRandomVehicle(loc, head)
+	VehicleManager.ShowVehicleSelectionMenu(track.meta.VehicleClasses)
 	WaitingForCountdownFinish = true
 end)
 
