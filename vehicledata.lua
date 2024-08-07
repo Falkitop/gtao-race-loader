@@ -992,12 +992,12 @@ local Compacts=
             };
 
 
-VehicleClasses = {
+VehicleClasses = { --Missing Classics
     ["Compacts"] = Compacts,
     ["Sedans"] = Sedans,
-    ["SUVs"] = SUVs,
+    ["SUV"] = SUVs,
     ["Coupes"] = Coupes,
-    ["Muscle"] = Muscle,
+    ["Mucle"] = Muscle,
     ["SportsClassics"] = SportsClassics,
     ["Sports"] = Sports,
     ["Super"] = Super,
@@ -1008,7 +1008,7 @@ VehicleClasses = {
     ["Vans"] = Vans,
     ["Cycles"] = Cycles,
     ["Boats"] = Boats,
-    ["Helicopters"] = Helicopters,
+    ["Heli"] = Helicopters,
     ["Planes"] = Planes,
     ["Service"] = Service,
     ["Emergency"] = Emergency,

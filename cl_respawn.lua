@@ -12,9 +12,6 @@ function SetPlayerIntoVehicle(vehicle)
 end
 
 local function RespawnVehicleOrPlayerToLastCheckpoint()
-
-
-
     Citizen.CreateThread(function()
         local coords = CurrentCheckpointLoc
         local head = CurrentCheckpointHead
@@ -96,6 +93,8 @@ Citizen.CreateThread(function()
                 print("PlayerPed: "..tostring(PlayerPed))
                 print("CurrentVehicle: "..tostring(CurrentVehicle))
 				if (RespawnDelta < 1 and Respawning == false) then
+                    print("leave VEhicle")
+                    
 					TaskLeaveVehicle(PlayerPed, GetVehiclePedIsIn(PlayerPed), 4160 )
 				end
 				RespawnDelta = 0
@@ -152,6 +151,8 @@ local function SpawnPlayerWithVehicle(veh)
     while not DoesEntityExist(vehicle) do
         Wait(0)
     end
+
+    SetModelAsNoLongerNeeded(modelHash)
     
 
     SetPlayerIntoVehicle(vehicle)
@@ -161,6 +162,7 @@ end
 
 local function ShowVehicleSelectionMenu(VehicleList)
     local VehicleList = GetVehicles(VehicleList)
+    print("List of Vehicle Classes: "..table.concat(VehicleList, ","))
     local labeledVehicles = {}
 
     for i=1,#VehicleList do
@@ -194,7 +196,8 @@ local function ShowVehicleSelectionMenu(VehicleList)
             end
        end
 
-    menu:Visible(true)    
+    menu:Visible(true) 
+    SpawnPlayerWithVehicle(VehicleList[newindex])   
 end
 
 VehicleManager = {

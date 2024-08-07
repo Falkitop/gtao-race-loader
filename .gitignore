@@ -1,6 +1,6 @@
 *.db
 *.sqbpro
-race2.py
+race2db.py
 ScrapeTots.txt
 keywords.txt
 URLHandler.lua

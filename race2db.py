@@ -11,7 +11,7 @@ headers = {
         # 'Accept-Encoding': 'gzip, deflate, br, zstd',
         'Referer': 'https://socialclub.rockstargames.com/',
         'authorization': 'None',
-        'baggage': 'sentry-environment=prod,sentry-release=2024-06-03dhi_prod.sc,sentry-public_key=9c63ab4e6cf94378a829ec7518e1eaf6,sentry-trace_id=26d68f9b84334c60b22eabd8c63809af,sentry-sample_rate=0.0025,sentry-transaction=^%^2F^%^3AsearchType(crews^%^7Cmembers^%^7Cphotos^%^7Cvideos^%^7Cjobs)^%^2F^%^3Akeywords^%^3F^%^2F^%^3Asort^%^3F,sentry-sampled=false',
+        'baggage': 'sentry-environment=prod,sentry-release=2024-06-03dhi_prod.sc,sentry-public_key=9c63ab4e6cf94378a829ec7518e1eaf6,sentry-trace_id=26d68f9b84334c60b22eabd8c63809af,sentry-sample_rate=0.0025,sentry-transaction=^%^2F^%^3AsearchType(crews^%^7Cmembers^%^7Cphotos^%^7Cvideos^%^7Cjobs)^%^2F^%^3Akeywords^%^3F^%^2F^%^3Asort^%^3F,sentry-sampled=False',
         'sentry-trace': '26d68f9b84334c60b22eabd8c63809af-a34afe73cae9f069-0',
         'x-amc': 'true',
         'x-cache-ver': '6',
@@ -120,23 +120,52 @@ def GetRaceIdsAndSaveDetailsToDB(startindex, searchterms):
                 break
             AddRaceDetailsToDB(Ids)
 
+
+import queue
+import threading
+
+proxies = ["85.8.68.2:80", "89.145.162.81:3128", "93.177.67.178:80", "130.61.120.213:8888"]
+
+def TryProxy(proxy):
+    try:
+        print("Checking Proxy " + proxy)
+        res = requests.get("http://ipinfo.io/json", 
+                           proxies={"http": proxy})
+        if(res.status_code == 200):
+            print("Good")
+            return True
+    except requests.exceptions.RequestException as e:
+        print("Bad")
+        return False
+    print("Bad")
+    return False
+
+valid_proxies = []
+for proxy in proxies:
+    if(TryProxy(proxy)):
+        valid_proxies.append(proxy)
+print("Valid Proxies: " + str(len(valid_proxies)))
+
+
 def GetRaceData(id):
-    time.sleep(10)
+    #time.sleep(10)
     connect_timeout = 10000
     read_timeout = 10000
 
-    session = requests.Session()
-    for i in range(1):#3
-        for j in range(10):#500
+    counter = 0
+    for i in range(3):#3
+        for j in range(500):#500
             for lang in ["en", "ja", "zh", "zh-cn", "fr", "de", "it", "ru", "pt", "pl", "ko", "es", "es-mx"]:
                 url = f"https://prod.cloud.rockstargames.com/ugc/gta5mission/{id}/{i}_{j}_{lang}.json"
                 
-                response =  requests.request("GET", url, timeout=(connect_timeout, read_timeout))
-                print("Trying " + url)
+                response =  requests.request("GET", url, timeout=(connect_timeout, read_timeout), proxies={"http": valid_proxies[counter]})
+                print("Trying " + url + " with proxy " + valid_proxies[counter])
                 if response.status_code == 200:
                     return response.text
                 else:
                     print(response.status_code)
+                counter += 1
+                counter = counter % (len(valid_proxies))
     print("Couldnt find any data for: "+id)
 
 def GetRaceDataAndSaveToDB():
@@ -148,7 +177,7 @@ def GetRaceDataAndSaveToDB():
         SELECT races.id, racedata.data
         FROM races LEFT JOIN racedata
         ON races.id = racedata.id
-        WHERE racedata.data IS NULL
+        WHERE racedata.data IS Null
     """
     cursor.execute(sql_ids)
     rows = cursor.fetchall()
@@ -172,8 +201,8 @@ def GetRaceDataAndSaveToDB():
 
 
 #GetRaceIdsAndSaveDetailsToDB(0, ["impossible"])
-#GetRaceData("uA1AObjYf0-rnMHnMHq04g")
-GetRaceDataAndSaveToDB()
+#GetRaceData("KH1FW9nOJEGrjBXuvCrEiQ")
+#GetRaceDataAndSaveToDB()
 
 
 

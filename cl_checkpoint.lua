@@ -125,7 +125,7 @@ local function IsTeleportCheckpoint(index)
 end
 
 function LoadNextCheckpoint()
-	local len = track.race.ChLength
+	local len = track.race.iNumberOfCheckPoints
 	local loc = track.race.ChLocs[CurrentCheckpointIndex+1]
 	local nextloc = track.race.ChLocs[CurrentCheckpointIndex+2]
 
