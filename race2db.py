@@ -11,7 +11,7 @@ headers = {
         # 'Accept-Encoding': 'gzip, deflate, br, zstd',
         'Referer': 'https://socialclub.rockstargames.com/',
         'authorization': 'None',
-        'baggage': 'sentry-environment=prod,sentry-release=2024-06-03dhi_prod.sc,sentry-public_key=9c63ab4e6cf94378a829ec7518e1eaf6,sentry-trace_id=26d68f9b84334c60b22eabd8c63809af,sentry-sample_rate=0.0025,sentry-transaction=^%^2F^%^3AsearchType(crews^%^7Cmembers^%^7Cphotos^%^7Cvideos^%^7Cjobs)^%^2F^%^3Akeywords^%^3F^%^2F^%^3Asort^%^3F,sentry-sampled=False',
+        'baggage': 'sentry-environment=prod,sentry-release=2024-06-03dhi_prod.sc,sentry-public_key=9c63ab4e6cf94378a829ec7518e1eaf6,sentry-trace_id=26d68f9b84334c60b22eabd8c63809af,sentry-sample_rate=0.0025,sentry-transaction=^%^2F^%^3AsearchType(crews^%^7Cmembers^%^7Cphotos^%^7Cvideos^%^7Cjobs)^%^2F^%^3Akeywords^%^3F^%^2F^%^3Asort^%^3F,sentry-sampled=false',
         'sentry-trace': '26d68f9b84334c60b22eabd8c63809af-a34afe73cae9f069-0',
         'x-amc': 'true',
         'x-cache-ver': '6',
