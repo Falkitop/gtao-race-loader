@@ -1,3 +1,7 @@
+This was a test from the beginning on how far I can get with this.
+I will maybe do a rewrite in the future.
+
+
 FiveM resource that allows to drive community-made races from GTA Online.
 Feeling and Experience was made as closely to the original online racing as possible
 
